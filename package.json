@@ -1,0 +1,34 @@
+{
+  "name": "mushmc.js",
+  "description": "Unofficial MushMC API wrapper for Node.js",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "keywords": [
+    "mushmc",
+    "mush",
+    "api",
+    "wrapper"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/murilommelo/mushmc.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/murilommelo/mushmc.js/issues"
+  },
+  "homepage": "https://github.com/murilommelo/mushmc.js#readme",
+  "author": "murilommelo (https://github.com/murilommelo/)",
+  "license": "MIT",
+  "scripts": {
+    "test": "vitest run",
+    "build": "tsc --noEmit && tsup",
+    "lint": "biome check --write"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.6",
+    "@types/node": "^25.5.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  }
+}
