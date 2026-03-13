@@ -3,6 +3,8 @@
   "description": "Unofficial MushMC API wrapper for Node.js",
   "version": "1.0.0",
   "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "keywords": [
     "mushmc",
     "mush",
@@ -19,8 +21,23 @@
   "homepage": "https://github.com/murilommelo/mushmc.js#readme",
   "author": "murilommelo (https://github.com/murilommelo/)",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      }
+    }
+  },
   "scripts": {
-    "test": "vitest run",
+    "test": "vitest run --typecheck",
     "build": "tsc --noEmit && tsup",
     "lint": "biome check --write"
   },
@@ -29,6 +46,11 @@
     "@types/node": "^25.5.0",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
+    "unplugin-replace": "^0.7.0",
     "vitest": "^4.1.0"
-  }
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "engineStrict": true
 }

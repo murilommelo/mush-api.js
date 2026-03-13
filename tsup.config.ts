@@ -1,19 +1,26 @@
 import { defineConfig } from "tsup";
+import Replace from "unplugin-replace/esbuild";
+import Package from "./package.json";
 
 export default defineConfig({
-	entry: ["./src/index.ts"],
-	format: ["cjs", "esm"],
-	target: "es2022",
-	skipNodeModulesBundle: true,
-	clean: true,
-	// cjsInterop: true,
-	minify: false,
-	terserOptions: {
-		mangle: false,
-		keep_classnames: true,
-		keep_fnames: true,
-	},
-	splitting: false,
-	keepNames: true,
-	dts: true,
+  entry: ["src/index.ts"],
+  format: ["esm", "cjs"],
+  target: "es2022",
+  skipNodeModulesBundle: true,
+  clean: true,
+  shims: true,
+  dts: true,
+  esbuildPlugins: [
+    Replace({
+      include: [/\.ts$/],
+      values: [
+        {
+          find: "!!PACKAGE_VERSION!!",
+          replacement() {
+            return Package.version;
+          },
+        },
+      ],
+    }),
+  ],
 });
