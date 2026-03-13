@@ -10,4 +10,4 @@ export * from "./utils/constants.js";
  *
  * @privateRemark We export this as string for better typings
  */
-export const version = "!!PACKAGE_VERSION!!" as string;
+export const version = "[VI]{{inject}}[/VI]" as string;

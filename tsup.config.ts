@@ -15,7 +15,7 @@ export default defineConfig({
       include: [/\.ts$/],
       values: [
         {
-          find: "!!PACKAGE_VERSION!!",
+          find: /\[VI\]{{inject}}\[\/VI\]/,
           replacement() {
             return Package.version;
           },
