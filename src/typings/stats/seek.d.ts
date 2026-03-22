@@ -47,7 +47,7 @@ export interface APIPlayerHideAndSeekStats
     HideAndSeekRoleStatsPerPeriod,
     HideAndSeekStatsPerPeriod {
   deaths: number;
-  hider_blocks_changed: number;
+  hider_blocks_changed: number; 
   hider_frozen: number;
   hider_stunned_seekers: number;
   kills: number;

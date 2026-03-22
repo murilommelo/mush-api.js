@@ -114,13 +114,13 @@ export interface APIPlayerSkyWarsStats
   deaths: number;
   games_played: number;
   kills: number;
+  level: number;
   level_badge: APIGameLevelBadge;
   losses: number;
   max_winstreak: number;
+  selected_cage: number;
   souls: number;
   wins: number;
   winstreak: number;
   xp: number;
-  level: number;
-  selected_cage: number;
 }

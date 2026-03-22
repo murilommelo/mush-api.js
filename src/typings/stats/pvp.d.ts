@@ -1,109 +1,94 @@
-export interface APIPlayerPVPStats {
-  arena_deaths: number;
-  arena_kills: number;
-  arena_killstreak: number;
-  arena_max_killstreak: number;
-  coins: number;
-  fps_deaths: number;
-  fps_kills: number;
-  fps_killstreak: number;
-  fps_max_killstreak: number;
-  mlg_hits: number;
-  mlg_misses: number;
-  mlg_streak_1: number;
-  mlg_streak_2: number;
-  mlg_streak_4: number;
-  challenges_extreme_max_damage_taken: number;
-  challenges_extreme_max_play_time: number;
-  challenges_extreme_plays: number;
-  challenges_extreme_total_damage_taken: number;
-  challenges_extreme_total_play_time: number;
-  challenges_extreme_total_soups_used: number;
-  challenges_medium_max_damage_taken: number;
-  challenges_medium_max_play_time: number;
-  challenges_medium_plays: number;
-  challenges_medium_total_damage_taken: number;
-  challenges_medium_total_play_time: number;
-  challenges_medium_total_soups_used: number;
-  challenges_drops_max_damage_taken: number;
-  challenges_drops_max_play_time: number;
-  challenges_drops_plays: number;
-  challenges_drops_total_damage_taken: number;
-  challenges_drops_total_play_time: number;
-  challenges_drops_total_soups_used: number;
-  challenges_easy_max_damage_taken: number;
-  challenges_easy_max_play_time: number;
-  challenges_easy_plays: number;
-  challenges_easy_total_damage_taken: number;
-  challenges_easy_total_play_time: number;
-  challenges_easy_total_soups_used: number;
-  challenges_varying_max_damage_taken: number;
-  challenges_varying_max_play_time: number;
-  challenges_varying_plays: number;
-  challenges_varying_total_damage_taken: number;
-  challenges_varying_total_play_time: number;
-  challenges_varying_total_soups_used: number;
-  "1v1_exp_s1003": number;
-  "1v1_exp_s1232": number;
-  "1v1_exp_s1289": number;
-  "1v1_exp_s1313": number;
-  "1v1_exp_s754": number;
-  "1v1_exp_s818": number;
-  "1v1_exp_s877": number;
-  "1v1_exp_s897": number;
-  "1v1_exp_s930": number;
-  "1v1_exp_s954": number;
+import type { MapKeys, Period } from "./";
+
+type ChallengesMode =
+  | "easy"
+  | "medium"
+  | "hard"
+  | "extreme"
+  | "wither"
+  | "varying"
+  | "drops";
+
+type ChallengesModeMaxDamageTaken = MapKeys<
+  ChallengesMode,
+  "challenges_",
+  "_max_damage_taken"
+>;
+
+type ChallengesModeTotalDamageTaken = MapKeys<
+  ChallengesMode,
+  "challenges_",
+  "_total_damage_taken"
+>;
+
+type ChallengesModeMaxPlayTime = MapKeys<
+  ChallengesMode,
+  "challenges_",
+  "_max_play_time"
+>;
+
+type ChallengesModeTotalPlayTime = MapKeys<
+  ChallengesMode,
+  "challenges_",
+  "_total_play_time"
+>;
+
+type ChallengesModePlays = MapKeys<ChallengesMode, "challenges_", "_plays">;
+
+type ChallengesModeSoupsUsed = MapKeys<
+  ChallengesMode,
+  "challenges_",
+  "_soups_used"
+>;
+
+type ChallengesModeStats = ChallengesModeMaxDamageTaken &
+  ChallengesModeTotalDamageTaken &
+  ChallengesModeMaxPlayTime &
+  ChallengesModeTotalPlayTime &
+  ChallengesModePlays &
+  ChallengesModeSoupsUsed;
+
+type MLGLevel = "1" | "2" | "3" | "4";
+
+type MLGLevelPeriodStats = MapKeys<Period, `mlg_streak_${MLGLevel}_`>;
+
+type MLGLevelStats = MapKeys<MLGLevel, "mlg_streak_">;
+
+type MLGStats = MLGLevelPeriodStats & MLGLevelStats;
+
+type ArenaAndFps = "arena" | "fps";
+
+type ArenaAndFpsDeaths = MapKeys<ArenaAndFps, "", "_deaths">;
+
+type ArenaAndFpsKills = MapKeys<ArenaAndFps, "", "_kills">;
+
+type ArenaAndFpsKillstreak = MapKeys<ArenaAndFps, "", "_killstreak">;
+
+type ArenaAndFpsMaxKillstreak = MapKeys<ArenaAndFps, "", "_max_killstreak">;
+
+type ArenaAndFpsPeriodKills = MapKeys<Period, `${ArenaAndFps}_kills_`>;
+
+type ArenaAndFpsStats = ArenaAndFpsDeaths &
+  ArenaAndFpsKills &
+  ArenaAndFpsKillstreak &
+  ArenaAndFpsMaxKillstreak &
+  ArenaAndFpsPeriodKills;
+
+export interface APIPlayerPVPStats
+  extends ChallengesModeStats,
+    MLGStats,
+    ArenaAndFpsStats {
+  [key: `1v1_exp_s${number}`]: number;
+  [key: `1v1_rank_s${number}`]: number;
   "1v1_losses": number;
   "1v1_wins": number;
-  challenges_wither_max_damage_taken: number;
-  challenges_wither_max_play_time: number;
-  challenges_wither_plays: number;
-  challenges_wither_total_damage_taken: number;
-  challenges_wither_total_play_time: number;
-  challenges_wither_total_soups_used: number;
-  deaths: number;
+  coins: number;
+  mlg_hits: number;
+  mlg_misses: number;
   fisherman_deaths: number;
   fisherman_kills: number;
   highest_killstreak: number;
   highest_winstreak: number;
+  deaths: number;
   kills: number;
-  mlg_streak_3: number;
-  challenges_hard_max_damage_taken: number;
-  challenges_hard_max_play_time: number;
-  challenges_hard_plays: number;
-  challenges_hard_total_damage_taken: number;
-  challenges_hard_total_play_time: number;
-  challenges_hard_total_soups_used: number;
-  fps_kills_monthly: number;
-  fps_kills_weekly: number;
-  "1v1_exp_s1027": number;
-  "1v1_exp_s1276": number;
-  arena_kills_monthly: number;
-  "1v1_exp_s1254": number;
-  "1v1_exp_s783": number;
-  "1v1_rank_s1003": number;
-  "1v1_rank_s1254": number;
-  fps_kills_daily: number;
-  "1v1_rank_s1232": number;
-  "1v1_rank_s1276": number;
-  "1v1_rank_s1289": number;
-  "1v1_rank_s877": number;
-  "1v1_rank_s930": number;
-  "1v1_rank_s954": number;
-  "1v1_rank_s1027": number;
-  "1v1_rank_s754": number;
-  "1v1_rank_s783": number;
-  "1v1_rank_s818": number;
-  "1v1_rank_s1313": number;
-  arena_kills_daily: number;
-  arena_kills_weekly: number;
-  mlg_streak_1_monthly: number;
-  mlg_streak_1_weekly: number;
-  mlg_streak_2_monthly: number;
-  mlg_streak_2_weekly: number;
-  mlg_streak_3_monthly: number;
-  mlg_streak_3_weekly: number;
-  mlg_streak_4_monthly: number;
-  mlg_streak_4_weekly: number;
-  mlg_missses: number;
 }

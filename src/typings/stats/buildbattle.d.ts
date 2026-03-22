@@ -88,6 +88,7 @@ export interface APIPlayerBuildBattleStats
   level: number;
   losses: number;
   max_winstreak: number;
+  perfects: number;
   played: number;
   points: number;
   second_place: number;
@@ -96,5 +97,4 @@ export interface APIPlayerBuildBattleStats
   wins: number;
   winstreak: number;
   xp: number;
-  perfects: number;
 }

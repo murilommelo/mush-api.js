@@ -42,9 +42,9 @@ export interface APIPlayerPartyStats
   first_place: number;
   played: number;
   points: number;
-  second_place: number;
-  third_place: number;
   points_monthly: number;
   points_weekly: number;
   points_daily: number;
+  second_place: number;
+  third_place: number;
 }

@@ -1,88 +1,129 @@
-export interface APIPlayerMissionsStats {
-  anniversary_2025_completed: number;
-  anniversary_2025_completed_all: number;
-  anniversary_2025_given: number;
-  bedwars_anniversary_2025_given: number;
-  bedwars_completed: number;
-  bedwars_daily_completed: number;
-  bedwars_daily_given: number;
-  bedwars_given: number;
-  bedwars_weekly_completed: number;
-  bedwars_weekly_given: number;
+import type { Year } from "../";
+import type { MapKeys, Period } from "./";
+
+type MissionPeriod = Exclude<Period, "monthly">;
+
+type MissionYear = Exclude<
+  Year,
+  "2019" | "2020" | "2021" | "2022" | "2023" | "2024" | "2026"
+>;
+
+type MissionType = "bedwars" | "buildbattle" | "duels" | "lobby" | "skywars";
+
+type MissionEvent =
+  | `anniversary_${MissionYear}`
+  | `christmas_${MissionYear}`
+  | `halloween_${MissionYear}`;
+
+type MissionPeriodGiven = MapKeys<MissionPeriod, "", "_given">;
+
+type MissionPeriodCompleted = MapKeys<MissionPeriod, "", "_completed">;
+
+type MissionPeriodCompletedAll = MapKeys<MissionPeriod, "", "_completed_all">;
+
+type MissionStatsPerPeriod = MissionPeriodGiven &
+  MissionPeriodCompleted &
+  MissionPeriodCompletedAll;
+
+type MissionEventGiven = MapKeys<MissionEvent, "", "_given">;
+
+type MissionEventCompleted = MapKeys<MissionEvent, "", "_completed">;
+
+type MissionEventCompletedAll = MapKeys<MissionEvent, "", "_completed_all">;
+
+type MissionStatsPerEvent = MissionEventGiven &
+  MissionEventCompleted &
+  MissionEventCompletedAll;
+
+type MissionTypeGiven = MapKeys<MissionType, "", "_given">;
+
+type MissionTypeCompleted = MapKeys<MissionType, "", "_completed">;
+
+type MissionTypeCompletedAll = MapKeys<
+  Exclude<MissionType, "lobby">,
+  "",
+  "_completed_all"
+>;
+
+type MissionStatsPerType = MissionTypeGiven &
+  MissionTypeCompleted &
+  MissionTypeCompletedAll;
+
+type MissionTypePeriodGiven = MapKeys<
+  MissionPeriod,
+  `${Exclude<MissionType, "lobby">}_`,
+  "_given"
+>;
+
+type MissionTypePeriodCompleted = MapKeys<
+  MissionPeriod,
+  `${Exclude<MissionType, "lobby">}_`,
+  "_completed"
+>;
+
+type MissionTypePeriodCompletedAll = MapKeys<
+  MissionPeriod,
+  `${Exclude<MissionType, "lobby">}_`,
+  "_completed_all"
+>;
+
+type MissionPeriodStatsPerType = MissionTypePeriodGiven &
+  MissionTypePeriodCompleted &
+  MissionTypePeriodCompletedAll;
+
+type MissionTypeEventGiven = MapKeys<
+  Exclude<MissionType, "buildbattle">,
+  "",
+  `_${MissionEvent}_given`
+>;
+
+type MissionTypeEventCompleted = MapKeys<
+  Exclude<MissionType, "buildbattle">,
+  "",
+  `_${MissionEvent}_completed`
+>;
+
+type MissionTypeEventCompletedAll = MapKeys<
+  Exclude<MissionType, "buildbattle">,
+  "",
+  `_${MissionEvent}_completed_all`
+>;
+
+type MissionEventStatsPerType = MissionTypeEventGiven &
+  MissionTypeEventCompleted &
+  MissionTypeEventCompletedAll;
+
+type MissionNascoMandouYearGiven = MapKeys<
+  `nascomandou_halloween_${MissionYear}`,
+  "",
+  "_given"
+>;
+
+type MissionNascoMandouYearCompleted = MapKeys<
+  `nascomandou_halloween_${MissionYear}`,
+  "",
+  "_completed"
+>;
+
+type MissionNascoMandouYearCompletedAll = MapKeys<
+  `nascomandou_halloween_${MissionYear}`,
+  "",
+  "_completed_all"
+>;
+
+type MissionNascoMandouStats = MissionNascoMandouYearGiven &
+  MissionNascoMandouYearCompleted &
+  MissionNascoMandouYearCompletedAll;
+
+export interface APIPlayerMissionsStats
+  extends MissionStatsPerPeriod,
+    MissionStatsPerEvent,
+    MissionStatsPerType,
+    MissionPeriodStatsPerType,
+    MissionEventStatsPerType,
+    MissionNascoMandouStats {
   completed: number;
-  daily_completed: number;
-  daily_completed_all: number;
-  daily_given: number;
-  duels_completed: number;
-  duels_daily_completed: number;
-  duels_daily_completed_all: number;
-  duels_daily_given: number;
-  duels_given: number;
-  duels_weekly_completed: number;
-  duels_weekly_given: number;
   given: number;
-  lobby_anniversary_2025_completed: number;
-  lobby_anniversary_2025_completed_all: number;
-  lobby_anniversary_2025_given: number;
-  lobby_completed: number;
-  lobby_given: number;
-  skywars_anniversary_2025_given: number;
-  skywars_daily_given: number;
-  skywars_given: number;
-  skywars_weekly_given: number;
-  weekly_completed: number;
-  weekly_given: number;
-  bedwars_christmas_2025_given: number;
-  christmas_2025_given: number;
-  duels_halloween_2025_given: number;
-  halloween_2025_given: number;
-  skywars_christmas_2025_given: number;
-  skywars_completed: number;
-  skywars_daily_completed: number;
-  bedwars_halloween_2025_given: number;
-  bedwars_daily_completed_all: number;
-  bedwars_halloween_2025_completed: number;
-  buildbattle_daily_given: number;
-  buildbattle_given: number;
-  buildbattle_weekly_given: number;
-  christmas_2025_completed: number;
-  christmas_2025_completed_all: number;
-  duels_christmas_2025_given: number;
-  duels_halloween_2025_completed: number;
-  halloween_2025_completed: number;
-  lobby_christmas_2025_completed: number;
-  lobby_christmas_2025_completed_all: number;
-  lobby_christmas_2025_given: number;
-  nascomandou_given: number;
-  nascomandou_halloween_2025_given: number;
-  skywars_halloween_2025_given: number;
-  skywars_weekly_completed: number;
-  duels_christmas_2025_completed: number;
-  bedwars_christmas_2025_completed: number;
-  bedwars_halloween_2025_completed_all: number;
-  bedwars_weekly_completed_all: number;
-  buildbattle_completed: number;
-  buildbattle_daily_completed: number;
-  halloween_2025_completed_all: number;
-  weekly_completed_all: number;
-  bedwars_anniversary_2025_completed: number;
-  bedwars_anniversary_2025_completed_all: number;
-  duels_weekly_completed_all: number;
-  skywars_christmas_2025_completed: number;
-  buildbattle_daily_completed_all: number;
-  buildbattle_weekly_completed: number;
-  duels_christmas_2025_completed_all: number;
-  duels_halloween_2025_completed_all: number;
   nascomandou_completed: number;
-  nascomandou_halloween_2025_completed: number;
-  nascomandou_halloween_2025_completed_all: number;
-  bedwars_christmas_2025_completed_all: number;
-  skywars_anniversary_2025_completed: number;
-  skywars_daily_completed_all: number;
-  skywars_weekly_completed_all: number;
-  buildbattle_weekly_completed_all: number;
-  skywars_christmas_2025_completed_all: number;
-  skywars_halloween_2025_completed: number;
-  skywars_anniversary_2025_completed_all: number;
-  skywars_halloween_2025_completed_all: number;
+  nascomandou_given: number;
 }
