@@ -1,20 +1,9 @@
 import type { MapKeys, Period } from "./";
 
-type QuickBuilderWinsPerPeriod = MapKeys<Period, "wins_">;
-
-type QuickBuilderXPPerPeriod = MapKeys<Period, "xp_">;
-
-type QuickBuilderWinstreakPerPeriod = MapKeys<Period, "winstreak_">;
-
-type QuickBuilderPerfectBuildsStreakPerPeriod = MapKeys<
-  Period,
-  "perfect_builds_streak"
->;
-
-type QuickBuilderStatsPerPeriod = QuickBuilderWinsPerPeriod &
-  QuickBuilderXPPerPeriod &
-  QuickBuilderWinstreakPerPeriod &
-  QuickBuilderPerfectBuildsStreakPerPeriod;
+type QuickBuilderStatsPerPeriod = MapKeys<Period, "wins_"> &
+  MapKeys<Period, "xp_"> &
+  MapKeys<Period, "winstreak_"> &
+  MapKeys<Period, "perfect_builds_streak">;
 
 export interface APIPlayerQuickBuildersStats
   extends QuickBuilderStatsPerPeriod {

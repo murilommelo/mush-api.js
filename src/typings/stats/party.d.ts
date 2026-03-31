@@ -17,22 +17,14 @@ type PartyGame =
   | "quake"
   | "spleef";
 
-type PartyGamePlayed = MapKeys<PartyGame, "", "_played">;
-
-type PartyGamePoints = MapKeys<PartyGame, "", "_points">;
-
-type PartyGamePlaced = MapKeys<
-  "grappler_race" | "kangaroo_race" | "stomper" | "race",
-  "",
-  "_placed"
->;
-
-type PartyGamePlace = MapKeys<PartyGame, "", `_${GamePlace}`>;
-
-type PartyStatsPerGame = PartyGamePlayed &
-  PartyGamePoints &
-  PartyGamePlaced &
-  PartyGamePlace;
+type PartyStatsPerGame = MapKeys<PartyGame, "", "_played"> &
+  MapKeys<PartyGame, "", "_points"> &
+  MapKeys<PartyGame, "", `_${GamePlace}`> &
+  MapKeys<
+    "grappler_race" | "kangaroo_race" | "stomper" | "race",
+    "",
+    "_placed"
+  >;
 
 type PartyGamePeriodPoints = MapKeys<PartyGame, "", `_points_${Period}`>;
 

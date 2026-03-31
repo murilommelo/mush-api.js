@@ -1,3 +1,4 @@
+import type { MushAPIResponse } from "../typings/index";
 import { MUSH_API_URL } from "../utils/constants.js";
 
 export class API {
@@ -18,27 +19,9 @@ export class API {
 
       const data = await response.json();
 
-      return data as MushAPIResponse<T>;
+      return data;
     } catch {
       return { error_code: 400, success: false };
     }
   }
 }
-
-interface MushAPISuccessResponse<T> {
-  success: true;
-  error_code: -1;
-  response: T;
-}
-
-interface MushAPIErrorResponse {
-  success: false;
-  error_code: number;
-  response?: {
-    status: number;
-    message: string;
-    details: unknown;
-  };
-}
-
-type MushAPIResponse<T> = MushAPISuccessResponse<T> | MushAPIErrorResponse;

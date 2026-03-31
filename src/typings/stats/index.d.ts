@@ -37,7 +37,7 @@ export type APIGameLevelBadge =
 
 // Utility type to avoid repetitive typings
 export type MapKeys<
-  Keys extends string | number,
+  Keys extends string,
   Prefix extends string = "",
   Suffix extends string = "",
 > = {

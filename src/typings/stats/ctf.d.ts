@@ -1,14 +1,8 @@
 import type { MapKeys, Period } from "./";
 
-type CTFGamesPlayedPerPeriod = MapKeys<Period, "games_played">;
-
-type CTFKillsPerPeriod = MapKeys<Period, "kills">;
-
-type CTFCapturesPerPeriod = MapKeys<Period, "games_played">;
-
-type CTFStatsPerPeriod = CTFGamesPlayedPerPeriod &
-  CTFKillsPerPeriod &
-  CTFCapturesPerPeriod;
+type CTFStatsPerPeriod = MapKeys<Period, "kills_"> &
+  MapKeys<Period, "captures_"> &
+  MapKeys<Period, "games_played_">;
 
 export interface APIPlayerCTFStats extends CTFStatsPerPeriod {
   captures: number;

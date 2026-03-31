@@ -33,6 +33,24 @@ export type Month =
   | "11"
   | "12";
 
+interface MushAPISuccessResponse<T> {
+  success: true;
+  error_code: -1;
+  response: T;
+}
+
+interface MushAPIErrorResponse {
+  success: false;
+  error_code: number;
+  response?: {
+    status: number;
+    message: string;
+    details: unknown;
+  };
+}
+
+export type MushAPIResponse<T> = MushAPISuccessResponse<T> | MushAPIErrorResponse;
+
 export type UUID = `${string}-${string}-${string}-${string}`;
 
 export type Color = `#${string}`;

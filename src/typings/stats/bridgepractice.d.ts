@@ -9,26 +9,10 @@ type BridgePracticeMode =
   | "short"
   | "infinite";
 
-type BridgePracticeModeBestTime = MapKeys<BridgePracticeMode, "", "_best_time">;
-
-type BridgePracticeModeTotalTime = MapKeys<
-  BridgePracticeMode,
-  "",
-  "_total_time"
->;
-
-type BridgePracticeModeBridgeAttempts = MapKeys<
-  BridgePracticeMode,
-  "",
-  "_bridge_attempts"
->;
-
-type BridgePracticeModeBridges = MapKeys<BridgePracticeMode, "", "_bridges">;
-
-type BridgePracticeStatsPerMode = BridgePracticeModeBestTime &
-  BridgePracticeModeTotalTime &
-  BridgePracticeModeBridgeAttempts &
-  BridgePracticeModeBridges;
+type BridgePracticeStatsPerMode = MapKeys<BridgePracticeMode, "", "_bridges"> &
+  MapKeys<BridgePracticeMode, "", "_bridge_attempts"> &
+  MapKeys<BridgePracticeMode, "", "_total_time"> &
+  MapKeys<BridgePracticeMode, "", "_best_time">;
 
 export interface APIPlayerBridgePracticeStats
   extends BridgePracticeStatsPerMode {}

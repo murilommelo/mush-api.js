@@ -36,75 +36,28 @@ type SkyWarsMode =
   | "uhc"
   | "soup";
 
-type SkyWarsKitWins = MapKeys<SkyWarsKit, `wins_${SkyWarsMode}_kit_`>;
+type SkyWarsStatsPerKit = MapKeys<SkyWarsKit, `wins_${SkyWarsMode}_kit_`> &
+  MapKeys<SkyWarsKit, `losses_${SkyWarsMode}_kit_`> &
+  MapKeys<SkyWarsKit, `kills_${SkyWarsMode}_kit_`> &
+  MapKeys<SkyWarsKit, `deaths_${SkyWarsMode}_kit_`> &
+  MapKeys<SkyWarsKit, `games_played_${SkyWarsMode}_kit_`>;
 
-type SkyWarsKitLosses = MapKeys<SkyWarsKit, `losses_${SkyWarsMode}_kit_`>;
+type SkyWarsStatsPerMode = MapKeys<SkyWarsMode, "deaths_"> &
+  MapKeys<SkyWarsMode, "games_played_"> &
+  MapKeys<SkyWarsMode, "kills_"> &
+  MapKeys<SkyWarsMode, "losses_"> &
+  MapKeys<SkyWarsMode, "max_winstreak_"> &
+  MapKeys<SkyWarsMode, "", "_selected_kit"> &
+  MapKeys<SkyWarsMode, "wins_"> &
+  MapKeys<SkyWarsMode, "winstreak_"> &
+  MapKeys<SkyWarsMode, "kills_", `_${Period}`> &
+  MapKeys<SkyWarsMode, "wins_", `_${Period}`> &
+  MapKeys<SkyWarsMode, "winstreak_", `_${Period}`>;
 
-type SkyWarsKitKills = MapKeys<SkyWarsKit, `kills_${SkyWarsMode}_kit_`>;
-
-type SkyWarsKitDeaths = MapKeys<SkyWarsKit, `deaths_${SkyWarsMode}_kit_`>;
-
-type SkyWarsKitGamesPlayed = MapKeys<
-  SkyWarsKit,
-  `games_played_${SkyWarsMode}_kit_`
->;
-
-type SkyWarsStatsPerKit = SkyWarsKitDeaths &
-  SkyWarsKitGamesPlayed &
-  SkyWarsKitKills &
-  SkyWarsKitLosses &
-  SkyWarsKitWins;
-
-type SkyWarsModeDeaths = MapKeys<SkyWarsMode, "deaths_">;
-
-type SkyWarsModeGamesPlayed = MapKeys<SkyWarsMode, "games_played_">;
-
-type SkyWarsModeKills = MapKeys<SkyWarsMode, "kills_">;
-
-type SkyWarsModeLosses = MapKeys<SkyWarsMode, "losses_">;
-
-type SkyWarsModeMaxWinstreak = MapKeys<SkyWarsMode, "max_winstreak_">;
-
-type SkyWarsModeSelectedKit = MapKeys<SkyWarsMode, "", "_selected_kit">;
-
-type SkyWarsModeWins = MapKeys<SkyWarsMode, "wins_">;
-
-type SkyWarsModeWinstreak = MapKeys<SkyWarsMode, "winstreak_">;
-
-type SkyWarsModeKillsPerPeriod = MapKeys<SkyWarsMode, "kills_", `_${Period}`>;
-
-type SkyWarsModeWinsPerPeriod = MapKeys<SkyWarsMode, "wins_", `_${Period}`>;
-
-type SkyWarsModeWinstreakPerPeriod = MapKeys<
-  SkyWarsMode,
-  "winstreak_",
-  `_${Period}`
->;
-
-type SkyWarsStatsPerMode = SkyWarsModeDeaths &
-  SkyWarsModeGamesPlayed &
-  SkyWarsModeKills &
-  SkyWarsModeLosses &
-  SkyWarsModeMaxWinstreak &
-  SkyWarsModeSelectedKit &
-  SkyWarsModeWins &
-  SkyWarsModeWinstreak &
-  SkyWarsModeKillsPerPeriod &
-  SkyWarsModeWinsPerPeriod &
-  SkyWarsModeWinstreakPerPeriod;
-
-type SkyWarsKillsPerPeriod = MapKeys<Period, "kills_">;
-
-type SkyWarsWinsPerPeriod = MapKeys<Period, "wins_">;
-
-type SkyWarsWinstreakPerPeriod = MapKeys<Period, "winstreak_">;
-
-type SkyWarsXPPerPeriod = MapKeys<Period, "xp_">;
-
-type SkyWarsStatsPerPeriod = SkyWarsKillsPerPeriod &
-  SkyWarsWinsPerPeriod &
-  SkyWarsWinstreakPerPeriod &
-  SkyWarsXPPerPeriod;
+type SkyWarsStatsPerPeriod = MapKeys<Period, "kills_"> &
+  MapKeys<Period, "wins_"> &
+  MapKeys<Period, "winstreak_"> &
+  MapKeys<Period, "xp_">;
 
 export interface APIPlayerSkyWarsStats
   extends SkyWarsStatsPerKit,

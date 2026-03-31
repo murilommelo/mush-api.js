@@ -1,8 +1,6 @@
 import type { Year } from "../";
 import type { MapKeys } from "./";
 
-// Assuming that Place started in 2023 based on this message
-// https://discord.com/channels/356472653906968576/369275451107049474/1134806548028346368
 type PlaceYears = Exclude<Year, "2019" | "2020" | "2021" | "2022">;
 
 type PlaceStats = MapKeys<PlaceYears, "place_">;

@@ -9,44 +9,12 @@ type ChallengesMode =
   | "varying"
   | "drops";
 
-type ChallengesModeMaxDamageTaken = MapKeys<
-  ChallengesMode,
-  "challenges_",
-  "_max_damage_taken"
->;
-
-type ChallengesModeTotalDamageTaken = MapKeys<
-  ChallengesMode,
-  "challenges_",
-  "_total_damage_taken"
->;
-
-type ChallengesModeMaxPlayTime = MapKeys<
-  ChallengesMode,
-  "challenges_",
-  "_max_play_time"
->;
-
-type ChallengesModeTotalPlayTime = MapKeys<
-  ChallengesMode,
-  "challenges_",
-  "_total_play_time"
->;
-
-type ChallengesModePlays = MapKeys<ChallengesMode, "challenges_", "_plays">;
-
-type ChallengesModeSoupsUsed = MapKeys<
-  ChallengesMode,
-  "challenges_",
-  "_soups_used"
->;
-
-type ChallengesModeStats = ChallengesModeMaxDamageTaken &
-  ChallengesModeTotalDamageTaken &
-  ChallengesModeMaxPlayTime &
-  ChallengesModeTotalPlayTime &
-  ChallengesModePlays &
-  ChallengesModeSoupsUsed;
+type ChallengesModeStats = MapKeys<ChallengesMode, "challenges_", "_plays"> &
+  MapKeys<ChallengesMode, "challenges_", "_soups_used"> &
+  MapKeys<ChallengesMode, "challenges_", "_total_damage_taken"> &
+  MapKeys<ChallengesMode, "challenges_", "_max_play_time"> &
+  MapKeys<ChallengesMode, "challenges_", "_total_play_time"> &
+  MapKeys<ChallengesMode, "challenges_", "_max_damage_taken">;
 
 type MLGLevel = "1" | "2" | "3" | "4";
 

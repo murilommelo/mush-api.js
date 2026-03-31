@@ -2,52 +2,23 @@ import type { MapKeys, Period } from "./";
 
 type HideAndSeekRole = "hider" | "seeker";
 
-type HideAndSeekRoleDeaths = MapKeys<HideAndSeekRole, "", "_deaths">;
+type HideAndSeekStatsPerRole = MapKeys<HideAndSeekRole, "", "_deaths"> &
+  MapKeys<HideAndSeekRole, "", "_losses"> &
+  MapKeys<HideAndSeekRole, "", "_max_winstreak"> &
+  MapKeys<HideAndSeekRole, "", "_played"> &
+  MapKeys<HideAndSeekRole, "", "_wins"> &
+  MapKeys<HideAndSeekRole, "", "_winstreak">;
 
-type HideAndSeekRoleLosses = MapKeys<HideAndSeekRole, "", "_losses">;
-
-type HideAndSeekRoleMaxWinstreak = MapKeys<
-  HideAndSeekRole,
-  "",
-  "_max_winstreak"
->;
-
-type HideAndSeekRolePlayed = MapKeys<HideAndSeekRole, "", "_played">;
-
-type HideAndSeekRoleWins = MapKeys<HideAndSeekRole, "", "_wins">;
-
-type HideAndSeekRoleWinstreak = MapKeys<HideAndSeekRole, "", "_winstreak">;
-
-type HideAndSeekStatsPerRole = HideAndSeekRoleDeaths &
-  HideAndSeekRoleLosses &
-  HideAndSeekRoleMaxWinstreak &
-  HideAndSeekRolePlayed &
-  HideAndSeekRoleWins &
-  HideAndSeekRoleWinstreak;
-
-type HideAndSeekRoleWinsPerPeriod = MapKeys<Period, `${HideAndSeekRole}_wins_`>;
-
-type HideAndSeekRoleWinstreakPerPeriod = MapKeys<
-  Period,
-  `${HideAndSeekRole}_winstreak_`
->;
-
-type HideAndSeekRoleStatsPerPeriod = HideAndSeekRoleWinsPerPeriod &
-  HideAndSeekRoleWinstreakPerPeriod;
-
-type HideAndSeekWinsPerPeriod = MapKeys<Period, "wins_">;
-
-type HideAndSeekWinstreakPerPeriod = MapKeys<Period, "winstreak_">;
-
-type HideAndSeekStatsPerPeriod = HideAndSeekWinsPerPeriod &
-  HideAndSeekWinstreakPerPeriod;
+type HideAndSeekStatsPerPeriod = MapKeys<Period, "wins_"> &
+  MapKeys<Period, "winstreak_"> &
+  MapKeys<Period, `${HideAndSeekRole}_wins_`> &
+  MapKeys<Period, `${HideAndSeekRole}_winstreak_`>;
 
 export interface APIPlayerHideAndSeekStats
   extends HideAndSeekStatsPerRole,
-    HideAndSeekRoleStatsPerPeriod,
     HideAndSeekStatsPerPeriod {
   deaths: number;
-  hider_blocks_changed: number; 
+  hider_blocks_changed: number;
   hider_frozen: number;
   hider_stunned_seekers: number;
   kills: number;

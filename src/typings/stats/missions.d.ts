@@ -5,7 +5,7 @@ type MissionPeriod = Exclude<Period, "monthly">;
 
 type MissionYear = Exclude<
   Year,
-  "2019" | "2020" | "2021" | "2022" | "2023" | "2024" | "2026"
+  "2019" | "2020" | "2021" | "2022" | "2023" | "2024"
 >;
 
 type MissionType = "bedwars" | "buildbattle" | "duels" | "lobby" | "skywars";
@@ -15,105 +15,49 @@ type MissionEvent =
   | `christmas_${MissionYear}`
   | `halloween_${MissionYear}`;
 
-type MissionPeriodGiven = MapKeys<MissionPeriod, "", "_given">;
+type MissionStatsPerPeriod = MapKeys<MissionPeriod, "", "_given"> &
+  MapKeys<MissionPeriod, "", "_completed"> &
+  MapKeys<MissionPeriod, "", "_completed_all">;
 
-type MissionPeriodCompleted = MapKeys<MissionPeriod, "", "_completed">;
+type MissionStatsPerEvent = MapKeys<MissionEvent, "", "_given"> &
+  MapKeys<MissionEvent, "", "_completed"> &
+  MapKeys<MissionEvent, "", "_completed_all">;
 
-type MissionPeriodCompletedAll = MapKeys<MissionPeriod, "", "_completed_all">;
+type MissionStatsPerType = MapKeys<MissionType, "", "_given"> &
+  MapKeys<MissionType, "", "_completed"> &
+  MapKeys<Exclude<MissionType, "lobby">, "", "_completed_all">;
 
-type MissionStatsPerPeriod = MissionPeriodGiven &
-  MissionPeriodCompleted &
-  MissionPeriodCompletedAll;
-
-type MissionEventGiven = MapKeys<MissionEvent, "", "_given">;
-
-type MissionEventCompleted = MapKeys<MissionEvent, "", "_completed">;
-
-type MissionEventCompletedAll = MapKeys<MissionEvent, "", "_completed_all">;
-
-type MissionStatsPerEvent = MissionEventGiven &
-  MissionEventCompleted &
-  MissionEventCompletedAll;
-
-type MissionTypeGiven = MapKeys<MissionType, "", "_given">;
-
-type MissionTypeCompleted = MapKeys<MissionType, "", "_completed">;
-
-type MissionTypeCompletedAll = MapKeys<
-  Exclude<MissionType, "lobby">,
-  "",
-  "_completed_all"
->;
-
-type MissionStatsPerType = MissionTypeGiven &
-  MissionTypeCompleted &
-  MissionTypeCompletedAll;
-
-type MissionTypePeriodGiven = MapKeys<
+type MissionPeriodStatsPerType = MapKeys<
   MissionPeriod,
   `${Exclude<MissionType, "lobby">}_`,
   "_given"
->;
+> &
+  MapKeys<MissionPeriod, `${Exclude<MissionType, "lobby">}_`, "_completed"> &
+  MapKeys<MissionPeriod, `${Exclude<MissionType, "lobby">}_`, "_completed_all">;
 
-type MissionTypePeriodCompleted = MapKeys<
-  MissionPeriod,
-  `${Exclude<MissionType, "lobby">}_`,
-  "_completed"
->;
-
-type MissionTypePeriodCompletedAll = MapKeys<
-  MissionPeriod,
-  `${Exclude<MissionType, "lobby">}_`,
-  "_completed_all"
->;
-
-type MissionPeriodStatsPerType = MissionTypePeriodGiven &
-  MissionTypePeriodCompleted &
-  MissionTypePeriodCompletedAll;
-
-type MissionTypeEventGiven = MapKeys<
+type MissionEventStatsPerType = MapKeys<
   Exclude<MissionType, "buildbattle">,
   "",
   `_${MissionEvent}_given`
->;
+> &
+  MapKeys<
+    Exclude<MissionType, "buildbattle">,
+    "",
+    `_${MissionEvent}_completed`
+  > &
+  MapKeys<
+    Exclude<MissionType, "buildbattle">,
+    "",
+    `_${MissionEvent}_completed_all`
+  >;
 
-type MissionTypeEventCompleted = MapKeys<
-  Exclude<MissionType, "buildbattle">,
-  "",
-  `_${MissionEvent}_completed`
->;
-
-type MissionTypeEventCompletedAll = MapKeys<
-  Exclude<MissionType, "buildbattle">,
-  "",
-  `_${MissionEvent}_completed_all`
->;
-
-type MissionEventStatsPerType = MissionTypeEventGiven &
-  MissionTypeEventCompleted &
-  MissionTypeEventCompletedAll;
-
-type MissionNascoMandouYearGiven = MapKeys<
+type MissionNascoMandouStats = MapKeys<
   `nascomandou_halloween_${MissionYear}`,
   "",
   "_given"
->;
-
-type MissionNascoMandouYearCompleted = MapKeys<
-  `nascomandou_halloween_${MissionYear}`,
-  "",
-  "_completed"
->;
-
-type MissionNascoMandouYearCompletedAll = MapKeys<
-  `nascomandou_halloween_${MissionYear}`,
-  "",
-  "_completed_all"
->;
-
-type MissionNascoMandouStats = MissionNascoMandouYearGiven &
-  MissionNascoMandouYearCompleted &
-  MissionNascoMandouYearCompletedAll;
+> &
+  MapKeys<`nascomandou_halloween_${MissionYear}`, "", "_completed"> &
+  MapKeys<`nascomandou_halloween_${MissionYear}`, "", "_completed_all">;
 
 export interface APIPlayerMissionsStats
   extends MissionStatsPerPeriod,
