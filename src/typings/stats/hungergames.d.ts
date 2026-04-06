@@ -1,448 +1,102 @@
-export interface APIPlayerHungerGamesStats {
+import type { Color, Month, Year } from "../";
+import type { MapKeys, Period } from "./";
+
+interface HungerGamesRanking {
+  hex_color: Color;
+  id: string;
+  name: string;
+  symbol: string;
+}
+
+type HungerGamesMode =
+  | "event"
+  | "solo"
+  | "doublekit"
+  | "minimush"
+  | "hg"
+  | "avengers"
+  | "insanehg"
+  | "loot_mode"
+  | "mega_fast"
+  | "quarterquell"
+  | "randomkit"
+  | "singlekitevent"
+  | "teamhg"
+  | "clanxclan"
+  | "arena_pvp"
+  | "communityhg"
+  | "gladiatorhg"
+  | "triplekit"
+  | "megamush"
+  | "old";
+
+type HungerGamesStatsPerMode = MapKeys<HungerGamesMode, "mode_", "_wins"> &
+  MapKeys<HungerGamesMode, "mode_", "_deaths"> &
+  MapKeys<HungerGamesMode, "mode_", "_kd"> &
+  MapKeys<HungerGamesMode, "mode_", "_kills"> &
+  MapKeys<HungerGamesMode, "mode_", "_assists"> &
+  MapKeys<HungerGamesMode, "mode_", "_games_played"> &
+  MapKeys<HungerGamesMode, "mode_", "_kills"> &
+  MapKeys<HungerGamesMode, "mode_", "_max_kills">;
+
+type PeriodicHungerGamesMode = "doublekit" | "hg" | "minimush";
+
+type HungerGamesStatsPerPeriod = MapKeys<
+  Period,
+  `mode_${PeriodicHungerGamesMode}_kills_`
+> &
+  MapKeys<Period, `mode_${PeriodicHungerGamesMode}_wins_`>;
+
+type HungerGamesModeRankStats = MapKeys<
+  PeriodicHungerGamesMode,
+  "mode_",
+  "_rank"
+> &
+  MapKeys<PeriodicHungerGamesMode, "mode_", "_rank_exp"> &
+  MapKeys<PeriodicHungerGamesMode, `mode_${Year}_${Month}_`, "_rank_exp"> &
+  MapKeys<PeriodicHungerGamesMode, `mode_${Year}_${Month}_`, "_rank"> &
+  MapKeys<
+    Exclude<
+      HungerGamesMode,
+      "singlekitevent" | "clanxclan" | "arena_pvp" | "gladiatorhg" | "triplekit"
+    >,
+    `mode_${Year}_${Month}_`,
+    "_max_kills"
+  >;
+
+type HungerGamesQQPoints = {
+  [key in
+    | `quarter_points_qq_${Year}_${Month}`
+    | `qq_${Year}_${Month}_xp`]: number;
+};
+
+type HungerGamesModeStatsPerSeason = MapKeys<
+  "minimush" | "triplekit" | "doublekit",
+  `mode_s${number}_`,
+  "_rank_exp"
+>;
+
+export interface APIPlayerHungerGamesStats
+  extends HungerGamesStatsPerMode,
+    HungerGamesStatsPerPeriod,
+    HungerGamesModeRankStats,
+    HungerGamesQQPoints,
+    HungerGamesModeStatsPerSeason {
   coins: number;
   deaths: number;
-  doublekit_ranking: {
-    hex_color: string;
-    id: string;
-    name: string;
-    symbol: string;
-  };
+  doublekit_ranking: HungerGamesRanking;
   games_played: number;
   kd: number;
-  minimush_ranking: {
-    hex_color: string;
-    id: string;
-    name: string;
-    symbol: string;
-  };
-  mode_event_games_played: number;
-  mode_solo_deaths: number;
-  mode_solo_games_played: number;
-  mode_solo_kd: number;
-  mode_2024_09_minimush_rank_exp: number;
-  mode_doublekit_deaths: number;
-  mode_doublekit_games_played: number;
-  mode_doublekit_kd: number;
-  mode_minimush_deaths: number;
-  mode_minimush_games_played: number;
-  mode_minimush_kd: number;
+  minimush_ranking: HungerGamesRanking;
   assists: number;
   kills: number;
-  mode_2021_06_doublekit_rank_exp: number;
-  mode_hg_assists: number;
-  mode_hg_deaths: number;
-  mode_hg_games_played: number;
-  mode_hg_kd: number;
-  mode_hg_kills: number;
   max_kills: number;
-  mode_2019_12_doublekit_rank: number;
-  mode_2019_12_doublekit_rank_exp: number;
-  mode_2019_6_doublekit_rank: number;
-  mode_2019_6_doublekit_rank_exp: number;
-  mode_2019_9_doublekit_rank: number;
-  mode_2019_9_doublekit_rank_exp: number;
-  mode_2019_9_hg_rank_exp: number;
-  mode_2020_03_doublekit_rank: number;
-  mode_2020_03_doublekit_rank_exp: number;
-  mode_2020_05_doublekit_rank_exp: number;
-  mode_2020_09_doublekit_rank: number;
-  mode_2020_09_doublekit_rank_exp: number;
-  mode_2020_12_doublekit_rank: number;
-  mode_2020_12_doublekit_rank_exp: number;
-  mode_2021_03_doublekit_rank_exp: number;
-  mode_2021_06_doublekit_rank: number;
-  mode_2021_09_doublekit_rank: number;
-  mode_2021_09_doublekit_rank_exp: number;
-  mode_2021_09_minimush_rank_exp: number;
-  mode_avengers_deaths: number;
-  mode_avengers_games_played: number;
-  mode_avengers_kd: number;
-  mode_avengers_kills: number;
-  mode_avengers_wins: number;
-  mode_doublekit_assists: number;
-  mode_doublekit_kills: number;
-  mode_doublekit_max_kills: number;
-  mode_doublekit_wins: number;
-  mode_hg_max_kills: number;
-  mode_hg_wins: number;
-  mode_insanehg_games_played: number;
-  mode_loot_mode_games_played: number;
-  mode_mega_fast_games_played: number;
-  mode_minimush_kills: number;
-  mode_minimush_max_kills: number;
-  mode_quarterquell_games_played: number;
-  mode_randomkit_games_played: number;
-  mode_s3_doublekit_rank: number;
-  mode_s3_doublekit_rank_exp: number;
-  mode_s4_doublekit_rank: number;
-  mode_s4_doublekit_rank_exp: number;
-  mode_singlekitevent_deaths: number;
-  mode_singlekitevent_games_played: number;
-  mode_singlekitevent_kd: number;
-  mode_singlekitevent_kills: number;
-  mode_singlekitevent_wins: number;
-  mode_teamhg_games_played: number;
-  quarter_points_qq_2020_05: number;
-  quarter_points_qq_2020_11: number;
-  quarter_points_qq_2021_02: number;
-  quarter_points_qq_2021_05: number;
-  quarter_points_qq_2021_08: number;
-  quarter_points_qq_2021_11: number;
   wins: number;
-  mode_2021_12_doublekit_max_kills: number;
-  mode_2021_12_doublekit_rank_exp: number;
-  mode_2023_06_doublekit_max_kills: number;
-  mode_2023_06_doublekit_rank_exp: number;
-  mode_2023_09_doublekit_max_kills: number;
-  mode_2023_09_doublekit_rank_exp: number;
-  mode_2023_12_doublekit_max_kills: number;
-  mode_2023_12_doublekit_rank: number;
-  mode_2023_12_doublekit_rank_exp: number;
-  mode_2023_12_hg_max_kills: number;
-  mode_2024_03_doublekit_max_kills: number;
-  mode_2024_03_doublekit_rank: number;
-  mode_2024_03_doublekit_rank_exp: number;
-  mode_2024_03_hg_max_kills: number;
-  mode_2024_03_teamhg_max_kills: number;
-  mode_2024_06_doublekit_max_kills: number;
-  mode_2024_06_doublekit_rank: number;
-  mode_2024_06_doublekit_rank_exp: number;
-  mode_2024_06_hg_max_kills: number;
-  mode_2024_06_insanehg_max_kills: number;
-  mode_2024_06_minimush_rank_exp: number;
-  mode_2024_09_doublekit_max_kills: number;
-  mode_2024_09_doublekit_rank: number;
-  mode_2024_09_doublekit_rank_exp: number;
-  mode_2024_09_hg_max_kills: number;
-  mode_2024_12_doublekit_max_kills: number;
-  mode_2024_12_doublekit_rank: number;
-  mode_2024_12_doublekit_rank_exp: number;
-  mode_2024_12_hg_max_kills: number;
-  mode_2024_12_minimush_max_kills: number;
-  mode_2024_12_minimush_rank_exp: number;
-  mode_2025_03_doublekit_max_kills: number;
-  mode_2025_03_doublekit_rank_exp: number;
-  mode_2025_03_hg_max_kills: number;
-  mode_2025_03_minimush_rank_exp: number;
-  mode_2025_03_solo_max_kills: number;
-  mode_2025_06_doublekit_max_kills: number;
-  mode_2025_06_doublekit_rank: number;
-  mode_2025_06_doublekit_rank_exp: number;
-  mode_2025_06_hg_max_kills: number;
-  mode_2025_06_minimush_rank_exp: number;
-  mode_2025_06_solo_max_kills: number;
-  mode_2025_09_doublekit_max_kills: number;
-  mode_2025_09_doublekit_rank_exp: number;
-  mode_insanehg_deaths: number;
-  mode_insanehg_kd: number;
-  mode_insanehg_kills: number;
-  mode_insanehg_max_kills: number;
-  mode_solo_kills: number;
-  mode_solo_max_kills: number;
-  mode_teamhg_assists: number;
-  mode_teamhg_deaths: number;
-  mode_teamhg_kd: number;
-  mode_teamhg_kills: number;
-  mode_teamhg_max_kills: number;
-  mode_teamhg_wins: number;
-  quarter_points_qq_2024_08: number;
-  quarter_points_qq_2025_11: number;
-  mode_2025_06_minimush_max_kills: number;
-  mode_2025_09_minimush_rank_exp: number;
-  mode_2025_12_minimush_rank_exp: number;
-  mode_2022_09_minimush_rank_exp: number;
-  mode_2022_12_doublekit_max_kills: number;
-  mode_2022_12_doublekit_rank: number;
-  mode_2022_12_doublekit_rank_exp: number;
-  mode_2022_12_hg_max_kills: number;
-  mode_2022_12_minimush_rank_exp: number;
-  mode_2023_03_doublekit_max_kills: number;
-  mode_2023_03_doublekit_rank: number;
-  mode_2023_03_doublekit_rank_exp: number;
-  mode_2023_03_minimush_max_kills: number;
-  mode_2023_03_minimush_rank_exp: number;
-  mode_2024_03_minimush_rank_exp: number;
-  mode_2025_09_solo_max_kills: number;
-  mode_2025_12_doublekit_max_kills: number;
-  mode_2025_12_doublekit_rank_exp: number;
-  mode_2023_06_doublekit_rank: number;
-  mode_2023_06_hg_max_kills: number;
-  mode_2023_06_minimush_max_kills: number;
-  mode_2023_06_minimush_rank_exp: number;
-  mode_2023_09_doublekit_rank: number;
-  mode_2023_09_minimush_max_kills: number;
-  mode_2023_09_minimush_rank: number;
-  mode_2023_09_minimush_rank_exp: number;
-  mode_2023_12_minimush_max_kills: number;
-  mode_2023_12_minimush_rank: number;
-  mode_2023_12_minimush_rank_exp: number;
-  mode_2023_12_quarterquell_max_kills: number;
-  mode_2024_03_minimush_max_kills: number;
-  mode_2025_03_doublekit_rank: number;
-  mode_2025_03_minimush_max_kills: number;
-  mode_2025_06_teamhg_max_kills: number;
-  mode_2025_12_doublekit_rank: number;
-  mode_2025_12_hg_max_kills: number;
-  mode_clanxclan_games_played: number;
-  mode_minimush_assists: number;
-  mode_minimush_wins: number;
-  mode_quarterquell_assists: number;
-  mode_quarterquell_deaths: number;
-  mode_quarterquell_kd: number;
-  mode_quarterquell_kills: number;
-  mode_quarterquell_max_kills: number;
-  mode_quarterquell_wins: number;
-  mode_solo_wins: number;
-  quarter_points_qq_2023_08: number;
-  quarter_points_qq_2023_11: number;
-  quarter_points_qq_2024_02: number;
-  quarter_points_qq_2025_05: number;
-  quarter_points_qq_2025_08: number;
-  quarter_points_qq_2026_02: number;
   kills_daily: number;
   kills_monthly: number;
   kills_weekly: number;
-  mode_2025_12_minimush_max_kills: number;
-  mode_2025_12_minimush_rank: number;
-  mode_2026_03_doublekit_max_kills: number;
-  mode_2026_03_doublekit_rank: number;
-  mode_2026_03_doublekit_rank_exp: number;
-  mode_2026_03_hg_max_kills: number;
-  mode_2026_03_minimush_max_kills: number;
-  mode_2026_03_minimush_rank_exp: number;
-  mode_doublekit_kills_daily: number;
-  mode_doublekit_kills_monthly: number;
-  mode_doublekit_kills_weekly: number;
-  mode_doublekit_wins_daily: number;
-  mode_doublekit_wins_monthly: number;
-  mode_doublekit_wins_weekly: number;
-  mode_hg_kills_daily: number;
-  mode_hg_kills_monthly: number;
-  mode_hg_kills_weekly: number;
-  mode_minimush_kills_monthly: number;
-  mode_minimush_kills_weekly: number;
   wins_daily: number;
   wins_monthly: number;
   wins_weekly: number;
-  mode_2025_03_quarterquell_max_kills: number;
-  mode_2025_06_quarterquell_max_kills: number;
-  mode_2019_12_minimush_rank: number;
-  mode_2019_12_minimush_rank_exp: number;
-  mode_2019_6_minimush_rank_exp: number;
-  mode_2019_9_hg_rank: number;
-  mode_2019_9_minimush_rank: number;
-  mode_2019_9_minimush_rank_exp: number;
-  mode_2020_03_minimush_rank_exp: number;
-  mode_2020_05_doublekit_rank: number;
-  mode_2020_05_minimush_rank_exp: number;
-  mode_2020_12_minimush_rank_exp: number;
-  mode_2021_03_doublekit_rank: number;
-  mode_2021_12_doublekit_rank: number;
-  mode_2022_06_doublekit_max_kills: number;
-  mode_2022_06_doublekit_rank: number;
-  mode_2022_06_doublekit_rank_exp: number;
-  mode_2022_06_hg_max_kills: number;
-  mode_2023_03_hg_max_kills: number;
-  mode_arena_pvp_deaths: number;
-  mode_arena_pvp_games_played: number;
-  mode_arena_pvp_kills: number;
-  mode_arena_pvp_wins: number;
-  mode_communityhg_deaths: number;
-  mode_communityhg_games_played: number;
-  mode_communityhg_kills: number;
-  mode_communityhg_wins: number;
-  mode_doublekit_rank: number;
-  mode_doublekit_rank_exp: number;
-  mode_gladiatorhg_deaths: number;
-  mode_gladiatorhg_games_played: number;
-  mode_gladiatorhg_kd: number;
-  mode_gladiatorhg_kills: number;
-  mode_hg_rank_exp: number;
-  mode_loot_mode_deaths: number;
-  mode_loot_mode_kills: number;
-  mode_megamush_games_played: number;
-  mode_minimush_rank_exp: number;
-  mode_null_deaths: number;
-  mode_null_games_played: number;
-  mode_null_kills: number;
-  mode_s2_doublekit_rank: number;
-  mode_s2_doublekit_rank_exp: number;
-  mode_s2_minimush_rank_exp: number;
-  mode_triplekit_games_played: number;
-  quarter_points_qq_2020_08: number;
-  quarter_points_qq_2022_02: number;
-  quarter_points_qq_2022_08: number;
-  quarter_points_qq_2023_05: number;
-  quarter_points_qq_2024_05: number;
-  mode_2020_05_minimush_rank: number;
-  mode_2020_09_minimush_rank_exp: number;
-  mode_2020_12_minimush_rank: number;
-  mode_2021_03_minimush_rank: number;
-  mode_2021_03_minimush_rank_exp: number;
-  mode_2021_06_minimush_rank: number;
-  mode_2021_06_minimush_rank_exp: number;
-  mode_2021_09_minimush_rank: number;
-  mode_2021_12_hg_max_kills: number;
-  mode_2021_12_minimush_max_kills: number;
-  mode_2021_12_minimush_rank: number;
-  mode_2021_12_minimush_rank_exp: number;
-  mode_2022_03_doublekit_max_kills: number;
-  mode_2022_03_doublekit_rank: number;
-  mode_2022_03_doublekit_rank_exp: number;
-  mode_2022_03_hg_max_kills: number;
-  mode_2022_03_minimush_max_kills: number;
-  mode_2022_03_minimush_rank_exp: number;
-  mode_2022_06_loot_mode_max_kills: number;
-  mode_2022_06_mega_fast_max_kills: number;
-  mode_2022_06_minimush_max_kills: number;
-  mode_2022_06_minimush_rank_exp: number;
-  mode_2022_09_doublekit_max_kills: number;
-  mode_2022_09_doublekit_rank: number;
-  mode_2022_09_doublekit_rank_exp: number;
-  mode_2022_09_hg_max_kills: number;
-  mode_2022_09_minimush_max_kills: number;
-  mode_2022_12_minimush_max_kills: number;
-  mode_2024_06_minimush_max_kills: number;
-  mode_2024_06_teamhg_max_kills: number;
-  mode_2025_09_doublekit_rank: number;
-  mode_2025_09_hg_max_kills: number;
-  mode_loot_mode_kd: number;
-  mode_loot_mode_max_kills: number;
-  mode_mega_fast_assists: number;
-  mode_mega_fast_deaths: number;
-  mode_mega_fast_kd: number;
-  mode_mega_fast_kills: number;
-  mode_mega_fast_max_kills: number;
-  mode_mega_fast_wins: number;
-  quarter_points_qq_2021_superduper: number;
-  quarter_points_qq_2022_05: number;
-  quarter_points_qq_2022_11: number;
-  quarter_points_qq_2024_11: number;
-  mode_2024_09_teamhg_max_kills: number;
-  mode_2025_09_minimush_max_kills: number;
-  mode_megamush_deaths: number;
-  mode_megamush_kd: number;
-  quarter_points_qq_2023_02: number;
-  mode_2021_12_megamush_max_kills: number;
-  mode_2021_12_quarterquell_max_kills: number;
-  mode_2022_06_megamush_max_kills: number;
-  mode_2022_06_minimush_rank: number;
-  mode_2022_09_megamush_max_kills: number;
-  mode_2024_03_insanehg_max_kills: number;
-  mode_2024_06_loot_mode_max_kills: number;
-  mode_2024_09_minimush_max_kills: number;
-  mode_2024_12_teamhg_max_kills: number;
-  mode_2025_03_teamhg_max_kills: number;
-  mode_insanehg_wins: number;
-  mode_megamush_assists: number;
-  mode_megamush_kills: number;
-  mode_megamush_max_kills: number;
-  mode_2022_12_insanehg_max_kills: number;
-  mode_2022_12_randomkit_max_kills: number;
-  mode_2024_03_loot_mode_max_kills: number;
-  mode_insanehg_assists: number;
-  mode_randomkit_assists: number;
-  mode_randomkit_deaths: number;
-  mode_randomkit_kd: number;
-  mode_randomkit_kills: number;
-  mode_randomkit_max_kills: number;
-  mode_randomkit_wins: number;
-  mode_2025_09_old_max_kills: number;
-  mode_old_deaths: number;
-  mode_old_games_played: number;
-  mode_old_kd: number;
-  mode_old_kills: number;
-  mode_old_max_kills: number;
-  mode_loot_mode_wins: number;
-  quarter_points_qq_2025_02: number;
-  mode_2022_03_megamush_max_kills: number;
-  mode_2022_03_minimush_rank: number;
-  mode_2022_09_minimush_rank: number;
-  mode_2022_09_quarterquell_max_kills: number;
-  mode_2022_12_minimush_rank: number;
-  mode_2023_03_quarterquell_max_kills: number;
-  mode_2023_06_minimush_rank: number;
-  mode_2023_06_quarterquell_max_kills: number;
-  mode_2023_09_megamush_max_kills: number;
-  mode_2024_09_minimush_rank: number;
-  mode_2024_12_minimush_rank: number;
-  mode_2025_06_minimush_rank: number;
-  mode_2025_09_minimush_rank: number;
   minimush_wins: number;
-  mode_2019_6_minimush_rank: number;
-  mode_2020_03_minimush_rank: number;
-  mode_2020_09_minimush_rank: number;
-  mode_2023_03_minimush_rank: number;
-  mode_2024_06_minimush_rank: number;
-  mode_2025_03_minimush_rank: number;
-  mode_minimush_rank: number;
-  mode_s2_minimush_rank: number;
-  mode_2023_03_teamhg_max_kills: number;
-  mode_2022_12_megamush_max_kills: number;
-  mode_2023_03_megamush_max_kills: number;
-  mode_2023_06_teamhg_max_kills: number;
-  mode_2023_12_loot_mode_max_kills: number;
-  mode_2023_12_teamhg_max_kills: number;
-  mode_2024_03_minimush_rank: number;
-  mode_2022_03_insanehg_max_kills: number;
-  mode_2023_09_hg_max_kills: number;
-  mode_2023_12_insanehg_max_kills: number;
-  mode_loot_mode_assists: number;
-  mode_2023_09_quarterquell_max_kills: number;
-  mode_2024_03_megamush_max_kills: number;
-  mode_2024_03_quarterquell_max_kills: number;
-  mode_minimush_kills_daily: number;
-  mode_2022_06_quarterquell_max_kills: number;
-  mode_old_assists: number;
-  mode_triplekit_deaths: number;
-  mode_triplekit_kd: number;
-  mode_2023_09_avengers_max_kills: number;
-  mode_avengers_max_kills: number;
-  mode_2022_03_avengers_max_kills: number;
-  mode_2023_03_avengers_max_kills: number;
-  mode_2023_09_event_max_kills: number;
-  mode_2025_12_avengers_max_kills: number;
-  mode_event_deaths: number;
-  mode_event_kd: number;
-  mode_event_kills: number;
-  mode_event_max_kills: number;
-  mode_hg_rank: number;
-  mode_2022_12_quarterquell_max_kills: number;
-  mode_2024_06_quarterquell_max_kills: number;
-  mode_2024_09_quarterquell_max_kills: number;
-  mode_2024_12_quarterquell_max_kills: number;
-  mode_2025_09_quarterquell_max_kills: number;
-  mode_2025_12_quarterquell_max_kills: number;
-  qq_2024_11_xp: number;
-  qq_2026_02_xp: number;
-  mode_2023_03_loot_mode_max_kills: number;
-  mode_solo_assists: number;
-  mode_2025_09_teamhg_max_kills: number;
-  mode_2022_03_quarterquell_max_kills: number;
-  mode_s2_triplekit_rank_exp: number;
-  mode_triplekit_kills: number;
-  mode_2025_12_teamhg_max_kills: number;
-  mode_event_assists: number;
-  mode_gladiatorhg_wins: number;
-  mode_communityhg_kd: number;
-  mode_old_wins: number;
-  mode_2023_12_megamush_max_kills: number;
-  mode_megamush_wins: number;
-  mode_2026_03_teamhg_max_kills: number;
-  mode_teamhg_kills_monthly: number;
-  mode_teamhg_wins_monthly: number;
-  mode_clanxclan_deaths: number;
-  mode_clanxclan_kd: number;
-  mode_2023_03_insanehg_max_kills: number;
-  mode_2025_03_insanehg_max_kills: number;
-  mode_2025_03_mega_fast_max_kills: number;
-  mode_hg_wins_monthly: number;
-  mode_hg_wins_weekly: number;
-  mode_2022_03_communityhg_max_kills: number;
-  mode_communityhg_assists: number;
-  mode_communityhg_max_kills: number;
-  mode_2023_12_event_max_kills: number;
-  mode_avengers_assists: number;
-  mode_event_wins: number;
-  mode_teamhg_kills_weekly: number;
 }

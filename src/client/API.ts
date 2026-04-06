@@ -14,6 +14,8 @@ export class API {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "User-Agent":
+            "mush-api.js (https://npmjs.com/package/mush-api.js, [VI]{{inject}}[/VI])",
         },
       });
 

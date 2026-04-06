@@ -40,8 +40,9 @@ export type MapKeys<
   Keys extends string,
   Prefix extends string = "",
   Suffix extends string = "",
+  Type = number
 > = {
-  [K in Keys as `${Prefix}${K}${Suffix}`]: number;
+  [K in Keys as `${Prefix}${K}${Suffix}`]: Type;
 };
 
 export type Period = "daily" | "weekly" | "monthly";

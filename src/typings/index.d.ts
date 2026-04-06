@@ -9,7 +9,8 @@ export type Year =
   | "2025"
   | "2026";
 
-export type Month =
+// Exporting this since it's what the API currently uses
+export type TwoDigitMonth =
   | "01"
   | "02"
   | "03"
@@ -19,7 +20,12 @@ export type Month =
   | "07"
   | "08"
   | "09"
-  // Some older accounts do not have statistics for months with double digits
+  | "10"
+  | "11"
+  | "12";
+
+// Some older accounts do not have statistics for months with double digits
+type OneDigitMonth =
   | "1"
   | "2"
   | "3"
@@ -32,6 +38,8 @@ export type Month =
   | "10"
   | "11"
   | "12";
+
+export type Month = TwoDigitMonth | OneDigitMonth;
 
 interface MushAPISuccessResponse<T> {
   success: true;
@@ -49,7 +57,9 @@ interface MushAPIErrorResponse {
   };
 }
 
-export type MushAPIResponse<T> = MushAPISuccessResponse<T> | MushAPIErrorResponse;
+export type MushAPIResponse<T> =
+  | MushAPISuccessResponse<T>
+  | MushAPIErrorResponse;
 
 export type UUID = `${string}-${string}-${string}-${string}`;
 

@@ -35,7 +35,6 @@ console.log(player);
 
 ## 📝 To-do
 
-- Reduce typings for `bedwars`, `duels` & `hungergames` files.
 - Typings, classes and routes for Player, Game, Punishment & XP table
 - Rate limit handling
 

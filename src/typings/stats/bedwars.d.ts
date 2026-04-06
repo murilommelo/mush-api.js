@@ -1,447 +1,88 @@
-export interface APIPlayerBedWarsStats {
-  "1v1_games_played": number;
-  "2v2_games_played": number;
-  "3v3v3v3_assists": number;
-  "3v3v3v3_beds_broken": number;
-  "3v3v3v3_beds_lost": number;
-  "3v3v3v3_deaths": number;
-  "3v3v3v3_final_assists": number;
-  "3v3v3v3_final_deaths": number;
-  "3v3v3v3_final_kills": number;
-  "3v3v3v3_fkdr": number;
-  "3v3v3v3_games_played": number;
-  "3v3v3v3_kills": number;
-  "3v3v3v3_losses": number;
-  "3v3v3v3_max_winstreak": number;
-  "3v3v3v3_wins": number;
-  "3v3v3v3_winstreak": number;
-  "4v4_games_played": number;
-  "4v4v4v4_assists": number;
-  "4v4v4v4_beds_broken": number;
-  "4v4v4v4_beds_lost": number;
-  "4v4v4v4_deaths": number;
-  "4v4v4v4_final_assists": number;
-  "4v4v4v4_final_deaths": number;
-  "4v4v4v4_final_kills": number;
-  "4v4v4v4_fkdr": number;
-  "4v4v4v4_games_played": number;
-  "4v4v4v4_kills": number;
-  "4v4v4v4_losses": number;
-  "4v4v4v4_max_winstreak": number;
-  "4v4v4v4_wins": number;
-  "4v4v4v4_winstreak": number;
+import type { TwoDigitMonth } from "../";
+import type { APIGameLevelBadge, MapKeys, Period } from "./";
+
+type BedWarsMode =
+  | "1v1"
+  | "2v2"
+  | "3v3"
+  | "4v4"
+  | "solo"
+  | "doubles"
+  | "3v3v3v3"
+  | "4v4v4v4"
+  | "4s"
+  | "mega";
+
+type BedWarsEventMode =
+  | "boost_solo"
+  | "boost_doubles"
+  | "classic_solo"
+  | "hardcore_solo"
+  | "hardcore_4v4v4v4"
+  | "hook_solo"
+  | "hook_doubles"
+  | "infection_solo"
+  | "infection_doubles"
+  | "champions";
+
+type AllBedWarsMode = BedWarsMode | BedWarsEventMode;
+
+type BedWarsModeStats = MapKeys<AllBedWarsMode, "", "_games_played"> &
+  MapKeys<BedWarsMode, "", "_beds_broken"> &
+  MapKeys<BedWarsMode, "", "_beds_lost"> &
+  MapKeys<BedWarsMode, "", "_deaths"> &
+  MapKeys<BedWarsMode, "", "_final_deaths"> &
+  MapKeys<BedWarsMode, "", "_final_kills"> &
+  MapKeys<BedWarsMode, "", "_fkdr"> &
+  MapKeys<BedWarsMode, "", "_kills"> &
+  MapKeys<BedWarsMode, "", "_losses"> &
+  MapKeys<BedWarsMode, "", "_max_winstreak"> &
+  MapKeys<BedWarsMode, "", "_wins"> &
+  MapKeys<BedWarsMode, "", "_winstreak"> &
+  MapKeys<BedWarsMode, "", "_assists"> &
+  MapKeys<BedWarsMode, "", "_final_assists">;
+
+type BedWarsModePeriodStats = MapKeys<BedWarsMode, "", `_kills_${Period}`> &
+  MapKeys<BedWarsMode, "", `_wins_${Period}`> &
+  MapKeys<BedWarsMode, "", `_beds_broken_${Period}`> &
+  MapKeys<BedWarsMode, "", `_final_kills_${Period}`> &
+  MapKeys<BedWarsMode, "", `_winstreak_${Period}`>;
+
+type BedWarsPeriodStats = MapKeys<Period, "level_"> &
+  MapKeys<Period, "xp_"> &
+  MapKeys<Period, "_kills"> &
+  MapKeys<Period, "_wins"> &
+  MapKeys<Period, "_beds_broken"> &
+  MapKeys<Period, "_final_kills"> &
+  MapKeys<Period, "_winstreak">;
+
+type ChampionYear = "2026";
+
+type BedWarsChampionsStats = MapKeys<
+  "final_points" | "final_rank" | "last_league" | "removed_points",
+  `champions_${ChampionYear}_${TwoDigitMonth}_`
+>;
+
+export interface APIPlayerBedWarsStats
+  extends BedWarsModeStats,
+    BedWarsModePeriodStats,
+    BedWarsPeriodStats,
+    BedWarsChampionsStats {
   assists: number;
   beds_broken: number;
   beds_lost: number;
   deaths: number;
-  doubles_assists: number;
-  doubles_beds_broken: number;
-  doubles_beds_lost: number;
-  doubles_deaths: number;
-  doubles_final_assists: number;
-  doubles_final_deaths: number;
-  doubles_final_kills: number;
-  doubles_fkdr: number;
-  doubles_games_played: number;
-  doubles_kills: number;
-  doubles_losses: number;
-  doubles_max_winstreak: number;
-  doubles_wins: number;
-  doubles_winstreak: number;
   final_assists: number;
   final_deaths: number;
   final_kills: number;
   fkdr: number;
   games_played: number;
-  infection_doubles_beds_broken: number;
-  infection_doubles_beds_lost: number;
-  infection_doubles_deaths: number;
-  infection_doubles_final_deaths: number;
-  infection_doubles_final_kills: number;
-  infection_doubles_games_played: number;
-  infection_doubles_kills: number;
-  infection_doubles_losses: number;
-  infection_doubles_max_winstreak: number;
-  infection_doubles_wins: number;
-  infection_doubles_winstreak: number;
-  infection_solo_beds_broken: number;
-  infection_solo_beds_lost: number;
-  infection_solo_deaths: number;
-  infection_solo_final_deaths: number;
-  infection_solo_final_kills: number;
-  infection_solo_games_played: number;
-  infection_solo_kills: number;
-  infection_solo_losses: number;
-  infection_solo_max_winstreak: number;
-  infection_solo_wins: number;
-  infection_solo_winstreak: number;
   kills: number;
   level: number;
-  level_badge: {
-    format: string;
-    hex_color: string;
-    min_level: number;
-    symbol: string;
-    type: string;
-  };
+  level_badge: APIGameLevelBadge;
   losses: number;
   max_winstreak: number;
-  mega_assists: number;
-  mega_beds_broken: number;
-  mega_beds_lost: number;
-  mega_deaths: number;
-  mega_final_assists: number;
-  mega_final_deaths: number;
-  mega_final_kills: number;
-  mega_fkdr: number;
-  mega_games_played: number;
-  mega_kills: number;
-  mega_losses: number;
-  mega_max_winstreak: number;
-  mega_wins: number;
-  mega_winstreak: number;
-  solo_beds_broken: number;
-  solo_beds_lost: number;
-  solo_deaths: number;
-  solo_final_deaths: number;
-  solo_final_kills: number;
-  solo_games_played: number;
-  solo_kills: number;
-  solo_losses: number;
-  solo_max_winstreak: number;
-  solo_wins: number;
-  solo_winstreak: number;
   wins: number;
   winstreak: number;
   xp: number;
-  "1v1_beds_broken": number;
-  "1v1_beds_lost": number;
-  "1v1_deaths": number;
-  "1v1_final_deaths": number;
-  "1v1_final_kills": number;
-  "1v1_fkdr": number;
-  "1v1_kills": number;
-  "1v1_losses": number;
-  "1v1_max_winstreak": number;
-  "1v1_wins": number;
-  "1v1_winstreak": number;
-  "2v2_assists": number;
-  "2v2_beds_broken": number;
-  "2v2_beds_lost": number;
-  "2v2_deaths": number;
-  "2v2_final_deaths": number;
-  "2v2_final_kills": number;
-  "2v2_kills": number;
-  "2v2_losses": number;
-  "2v2_max_winstreak": number;
-  "2v2_wins": number;
-  "2v2_winstreak": number;
-  "3v3_games_played": number;
-  "4v4_beds_broken": number;
-  "4v4_beds_lost": number;
-  "4v4_deaths": number;
-  "4v4_final_deaths": number;
-  "4v4_final_kills": number;
-  "4v4_kills": number;
-  "4v4_losses": number;
-  "4v4_wins": number;
-  "4v4_winstreak": number;
-  beds_broken_monthly: number;
-  beds_broken_weekly: number;
-  final_kills_monthly: number;
-  final_kills_weekly: number;
-  hardcore_solo_deaths: number;
-  hardcore_solo_final_deaths: number;
-  hardcore_solo_final_kills: number;
-  hardcore_solo_games_played: number;
-  hardcore_solo_kills: number;
-  hardcore_solo_losses: number;
-  hardcore_solo_winstreak: number;
-  hook_solo_assists: number;
-  hook_solo_beds_broken: number;
-  hook_solo_beds_lost: number;
-  hook_solo_deaths: number;
-  hook_solo_final_assists: number;
-  hook_solo_final_deaths: number;
-  hook_solo_final_kills: number;
-  hook_solo_games_played: number;
-  hook_solo_kills: number;
-  hook_solo_losses: number;
-  hook_solo_max_winstreak: number;
-  hook_solo_wins: number;
-  hook_solo_winstreak: number;
-  kills_monthly: number;
-  kills_weekly: number;
-  level_monthly: number;
-  solo_assists: number;
-  solo_beds_broken_monthly: number;
-  solo_beds_broken_weekly: number;
-  solo_final_assists: number;
-  solo_final_kills_monthly: number;
-  solo_final_kills_weekly: number;
-  solo_fkdr: number;
-  solo_kills_monthly: number;
-  solo_kills_weekly: number;
-  solo_wins_monthly: number;
-  solo_wins_weekly: number;
-  wins_monthly: number;
-  wins_weekly: number;
-  xp_monthly: number;
-  xp_weekly: number;
-  boost_solo_beds_broken: number;
-  boost_solo_beds_lost: number;
-  boost_solo_deaths: number;
-  boost_solo_final_deaths: number;
-  boost_solo_final_kills: number;
-  boost_solo_fkdr: number;
-  boost_solo_games_played: number;
-  boost_solo_kills: number;
-  boost_solo_losses: number;
-  boost_solo_winstreak: number;
-  "2v2_fkdr": number;
-  "4v4_assists": number;
-  boost_doubles_beds_lost: number;
-  boost_doubles_deaths: number;
-  boost_doubles_final_deaths: number;
-  boost_doubles_games_played: number;
-  boost_doubles_kills: number;
-  boost_doubles_losses: number;
-  boost_doubles_winstreak: number;
-  boost_solo_assists: number;
-  boost_solo_final_assists: number;
-  boost_solo_max_winstreak: number;
-  boost_solo_wins: number;
-  doubles_beds_broken_monthly: number;
-  doubles_final_kills_monthly: number;
-  doubles_kills_monthly: number;
-  hook_solo_fkdr: number;
-  infection_solo_assists: number;
-  infection_solo_final_assists: number;
-  infection_solo_fkdr: number;
-  "3v3_beds_broken": number;
-  "3v3_beds_lost": number;
-  "3v3_deaths": number;
-  "3v3_final_deaths": number;
-  "3v3_final_kills": number;
-  "3v3_kills": number;
-  "3v3_losses": number;
-  "3v3_max_winstreak": number;
-  "3v3_wins": number;
-  "3v3_winstreak": number;
-  "4v4_final_assists": number;
-  "4v4_fkdr": number;
-  "4v4_kills_monthly": number;
-  "4v4_max_winstreak": number;
-  solo_winstreak_monthly: number;
-  "1v1_beds_broken_monthly": number;
-  "1v1_final_kills_monthly": number;
-  "1v1_kills_monthly": number;
-  "1v1_wins_monthly": number;
-  "1v1_winstreak_monthly": number;
-  "2v2_final_assists": number;
-  "3v3_assists": number;
-  "3v3_final_assists": number;
-  champions_2026_01_final_points: number;
-  champions_2026_01_final_rank: number;
-  champions_2026_01_last_league: number;
-  champions_2026_01_removed_points: number;
-  champions_assists: number;
-  champions_beds_broken: number;
-  champions_beds_lost: number;
-  champions_deaths: number;
-  champions_final_assists: number;
-  champions_final_deaths: number;
-  champions_final_kills: number;
-  champions_fkdr: number;
-  champions_games_played: number;
-  champions_kills: number;
-  champions_losses: number;
-  champions_max_winstreak: number;
-  champions_wins: number;
-  champions_winstreak: number;
-  doubles_wins_monthly: number;
-  doubles_winstreak_monthly: number;
-  "3v3_fkdr": number;
-  "3v3v3v3_beds_broken_monthly": number;
-  "3v3v3v3_final_kills_monthly": number;
-  "3v3v3v3_kills_monthly": number;
-  "3v3v3v3_wins_monthly": number;
-  "3v3v3v3_winstreak_monthly": number;
-  "4s_assists": number;
-  "4s_beds_broken": number;
-  "4s_beds_lost": number;
-  "4s_deaths": number;
-  "4s_final_assists": number;
-  "4s_final_deaths": number;
-  "4s_final_kills": number;
-  "4s_fkdr": number;
-  "4s_games_played": number;
-  "4s_kills": number;
-  "4s_losses": number;
-  "4s_max_winstreak": number;
-  "4s_wins": number;
-  "4s_winstreak": number;
-  "4v4_beds_broken_monthly": number;
-  "4v4_beds_broken_weekly": number;
-  "4v4_final_kills_monthly": number;
-  "4v4_final_kills_weekly": number;
-  "4v4_kills_weekly": number;
-  "4v4_wins_monthly": number;
-  "4v4_wins_weekly": number;
-  "4v4_winstreak_monthly": number;
-  "4v4_winstreak_weekly": number;
-  classic_solo_beds_lost: number;
-  classic_solo_final_deaths: number;
-  classic_solo_games_played: number;
-  classic_solo_kills: number;
-  classic_solo_losses: number;
-  classic_solo_winstreak: number;
-  solo_winstreak_weekly: number;
-  winstreak_monthly: number;
-  winstreak_weekly: number;
-  hook_doubles_assists: number;
-  hook_doubles_beds_lost: number;
-  hook_doubles_deaths: number;
-  hook_doubles_final_assists: number;
-  hook_doubles_final_deaths: number;
-  hook_doubles_final_kills: number;
-  hook_doubles_games_played: number;
-  hook_doubles_losses: number;
-  hook_doubles_winstreak: number;
-  "4v4v4v4_beds_broken_monthly": number;
-  "4v4v4v4_beds_broken_weekly": number;
-  "4v4v4v4_final_kills_monthly": number;
-  "4v4v4v4_final_kills_weekly": number;
-  "4v4v4v4_kills_monthly": number;
-  "4v4v4v4_kills_weekly": number;
-  "4v4v4v4_wins_monthly": number;
-  "4v4v4v4_wins_weekly": number;
-  "4v4v4v4_winstreak_monthly": number;
-  "4v4v4v4_winstreak_weekly": number;
-  boost_doubles_beds_broken: number;
-  boost_doubles_final_kills: number;
-  boost_doubles_wins: number;
-  classic_solo_beds_broken: number;
-  classic_solo_deaths: number;
-  classic_solo_final_assists: number;
-  classic_solo_final_kills: number;
-  classic_solo_fkdr: number;
-  classic_solo_max_winstreak: number;
-  classic_solo_wins: number;
-  hardcore_solo_wins: number;
-  hook_doubles_beds_broken: number;
-  hook_doubles_kills: number;
-  hook_doubles_max_winstreak: number;
-  hook_doubles_wins: number;
-  boost_doubles_assists: number;
-  boost_doubles_final_assists: number;
-  boost_doubles_fkdr: number;
-  boost_doubles_max_winstreak: number;
-  infection_doubles_final_assists: number;
-  infection_doubles_fkdr: number;
-  mega_final_kills_monthly: number;
-  mega_kills_monthly: number;
-  "4s_kills_monthly": number;
-  "4s_kills_weekly": number;
-  "4s_wins_daily": number;
-  "4s_wins_monthly": number;
-  "4s_wins_weekly": number;
-  "4s_winstreak_daily": number;
-  "4s_winstreak_monthly": number;
-  "4s_winstreak_weekly": number;
-  "4v4_final_kills_daily": number;
-  "4v4_kills_daily": number;
-  "4v4_wins_daily": number;
-  "4v4_winstreak_daily": number;
-  final_kills_daily: number;
-  kills_daily: number;
-  wins_daily: number;
-  winstreak_daily: number;
-  xp_daily: number;
-  "3v3_beds_broken_daily": number;
-  "3v3_beds_broken_monthly": number;
-  "3v3_beds_broken_weekly": number;
-  "3v3_final_kills_daily": number;
-  "3v3_final_kills_monthly": number;
-  "3v3_final_kills_weekly": number;
-  "3v3_kills_daily": number;
-  "3v3_kills_monthly": number;
-  "3v3_kills_weekly": number;
-  "3v3_wins_daily": number;
-  "3v3_wins_monthly": number;
-  "3v3_wins_weekly": number;
-  "3v3_winstreak_daily": number;
-  "3v3_winstreak_monthly": number;
-  "3v3_winstreak_weekly": number;
-  beds_broken_daily: number;
-  solo_final_kills_daily: number;
-  solo_kills_daily: number;
-  doubles_beds_broken_daily: number;
-  doubles_beds_broken_weekly: number;
-  doubles_final_kills_daily: number;
-  doubles_final_kills_weekly: number;
-  doubles_kills_daily: number;
-  doubles_kills_weekly: number;
-  doubles_wins_daily: number;
-  doubles_wins_weekly: number;
-  "3v3v3v3_beds_broken_weekly": number;
-  "3v3v3v3_final_kills_daily": number;
-  "3v3v3v3_final_kills_weekly": number;
-  "3v3v3v3_kills_weekly": number;
-  "3v3v3v3_wins_weekly": number;
-  level_daily: number;
-  level_weekly: number;
-  solo_beds_broken_daily: number;
-  solo_wins_daily: number;
-  solo_winstreak_daily: number;
-  "3v3v3v3_beds_broken_daily": number;
-  "3v3v3v3_kills_daily": number;
-  "3v3v3v3_wins_daily": number;
-  "3v3v3v3_winstreak_daily": number;
-  "3v3v3v3_winstreak_weekly": number;
-  "4v4v4v4_beds_broken_daily": number;
-  "4v4v4v4_final_kills_daily": number;
-  "4v4v4v4_kills_daily": number;
-  "4v4v4v4_wins_daily": number;
-  "4v4v4v4_winstreak_daily": number;
-  mega_beds_broken_monthly: number;
-  mega_beds_broken_weekly: number;
-  mega_final_kills_daily: number;
-  mega_final_kills_weekly: number;
-  mega_kills_daily: number;
-  mega_kills_weekly: number;
-  mega_wins_monthly: number;
-  mega_wins_weekly: number;
-  doubles_winstreak_daily: number;
-  doubles_winstreak_weekly: number;
-  "4s_beds_broken_monthly": number;
-  "4s_final_kills_daily": number;
-  "4s_final_kills_monthly": number;
-  "4s_final_kills_weekly": number;
-  "4s_kills_daily": number;
-  "4v4_beds_broken_daily": number;
-  infection_doubles_assists: number;
-  "1v1_assists": number;
-  "1v1_beds_broken_weekly": number;
-  "1v1_final_kills_weekly": number;
-  "1v1_kills_weekly": number;
-  "1v1_wins_weekly": number;
-  "1v1_winstreak_weekly": number;
-  "1v1_final_assists": number;
-  classic_solo_assists: number;
-  hardcore_4v4v4v4_games_played: number;
-  hardcore_4v4v4v4_deaths: number;
-  hardcore_4v4v4v4_final_deaths: number;
-  hardcore_4v4v4v4_losses: number;
-  hardcore_4v4v4v4_wins: number;
-  hardcore_4v4v4v4_winstreak: number;
-  hook_doubles_fkdr: number;
-  mega_winstreak_monthly: number;
-  hardcore_4v4v4v4_final_kills: number;
-  hardcore_4v4v4v4_kills: number;
-  mega_beds_broken_daily: number;
-  "2v2_final_kills_monthly": number;
-  "2v2_kills_monthly": number;
-  "2v2_wins_monthly": number;
-  "2v2_winstreak_monthly": number;
 }
