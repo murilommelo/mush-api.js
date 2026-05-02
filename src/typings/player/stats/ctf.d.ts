@@ -1,4 +1,4 @@
-import type { MapKeys, Period } from "./";
+import type { MapKeys, Period } from ".";
 
 type CTFStatsPerPeriod = MapKeys<Period, "kills_"> &
   MapKeys<Period, "captures_"> &

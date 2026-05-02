@@ -1,4 +1,4 @@
-import type { GamePlace, MapKeys, Period } from "./";
+import type { GamePlace, MapKeys, Period } from ".";
 
 type BuildBattleMode = "mini" | "solo" | "doubles" | "pro";
 

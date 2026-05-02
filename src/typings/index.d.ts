@@ -202,3 +202,12 @@ export type MushRank =
   | "vip"
   | "year_2017"
   | "youtuber";
+
+/**
+ * The XP table object
+ * 
+ * Each key is the level and the value is the required XP amount
+ */
+export type APIXPTableInfo = {
+  [level: string]: number;
+};

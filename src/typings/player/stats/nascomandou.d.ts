@@ -1,5 +1,5 @@
-import type { Year } from "../";
-import type { MapKeys } from "./";
+import type { Year } from "../..";
+import type { MapKeys } from ".";
 
 type NascoMandouYears = Exclude<Year, "2019" | "2020" | "2021" | "2022">;
 

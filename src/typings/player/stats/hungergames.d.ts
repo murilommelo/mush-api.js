@@ -1,5 +1,5 @@
-import type { Color, Month, Year } from "../";
-import type { MapKeys, Period } from "./";
+import type { Color, Month, Year } from "../..";
+import type { MapKeys, Period } from ".";
 
 interface HungerGamesRanking {
   hex_color: Color;

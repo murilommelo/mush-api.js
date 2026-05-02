@@ -1,4 +1,4 @@
-import type { APIGameLevelBadge, MapKeys, Period } from "./";
+import type { APIGameLevelBadge, MapKeys, Period } from ".";
 
 type SkyWarsKit =
   | "default"

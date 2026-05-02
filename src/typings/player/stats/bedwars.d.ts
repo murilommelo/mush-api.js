@@ -1,5 +1,5 @@
-import type { TwoDigitMonth } from "../";
-import type { APIGameLevelBadge, MapKeys, Period } from "./";
+import type { TwoDigitMonth } from "../..";
+import type { APIGameLevelBadge, MapKeys, Period } from ".";
 
 type BedWarsMode =
   | "1v1"

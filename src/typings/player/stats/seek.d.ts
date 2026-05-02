@@ -1,4 +1,4 @@
-import type { MapKeys, Period } from "./";
+import type { MapKeys, Period } from ".";
 
 type HideAndSeekRole = "hider" | "seeker";
 

@@ -1,5 +1,5 @@
-import type { Year } from "../";
-import type { MapKeys, Period } from "./";
+import type { Year } from "../..";
+import type { MapKeys, Period } from ".";
 
 type MissionPeriod = Exclude<Period, "monthly">;
 

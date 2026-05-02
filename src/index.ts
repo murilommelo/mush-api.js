@@ -1,7 +1,7 @@
 export * from "./client/Client.js";
 
 export type * from "./typings/index.js";
-export type * from "./typings/player.js";
+export type * from "./typings/player/player.js";
 
 export * from "./utils/constants.js";
 

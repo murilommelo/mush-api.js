@@ -1,4 +1,4 @@
-import type { MapKeys } from "./";
+import type { MapKeys } from ".";
 
 type BridgePracticeMode =
   | "extra_short"

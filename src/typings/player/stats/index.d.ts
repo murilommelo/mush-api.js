@@ -1,4 +1,4 @@
-import type { Color } from "../";
+import type { Color } from "../..";
 import type { APIPlayerBedWarsStats } from "./bedwars";
 import type { APIPlayerBlockPartyStats } from "./blockparty";
 import type { APIPlayerBridgePracticeStats } from "./bridgepractice";
@@ -40,7 +40,7 @@ export type MapKeys<
   Keys extends string,
   Prefix extends string = "",
   Suffix extends string = "",
-  Type = number
+  Type = number,
 > = {
   [K in Keys as `${Prefix}${K}${Suffix}`]: Type;
 };
