@@ -17,13 +17,13 @@ import type { APIPlayerQuickBuildersStats } from "./quickbuilders";
 import type { APIPlayerHideAndSeekStats } from "./seek";
 import type { APIPlayerSkyWarsStats } from "./skywars_r1";
 
-interface APIGameLevelBadgeFormatType {
+export interface APIGameLevelBadgeFormatType {
   format: string;
   min_level: number;
   type: "format";
 }
 
-interface APIGameLevelBadgeColorType {
+export interface APIGameLevelBadgeColorType {
   format: string;
   hex_color: Color;
   min_level: number;

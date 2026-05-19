@@ -116,7 +116,7 @@ export interface APIPlayerTag {
     /**
      * This player's Ultra+ "+" symbol color
      */
-    plus: string;
+    plus?: string;
     /**
      * This player's tag custom color, overrides the tag color
      */

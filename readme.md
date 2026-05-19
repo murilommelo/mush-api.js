@@ -9,6 +9,11 @@ An unofficial Node.js wrapper for the [Mush](https://mush.com.br/) API.
 > [!NOTE]
 > Please note that the typings were generated based on data collected from multiple players and may be outdated or change over time.
 
+## 🚀 Features
+- **Developer-first**, no more optional chaining on API objects — this package handles everything for you
+- **Type-safe classes**, making the API easier and safer to use without guessing object structures
+- **Built-in error handling**, so you can focus on returned data instead of manually checking API statuses and errors
+
 ## 📦 Installation
 
 Install the package using your preferred package manager:
@@ -18,25 +23,29 @@ Install the package using your preferred package manager:
 | [npm](https://npmjs.com/) | `npm install mush-api.js` |
 | [pnpm](https://pnpm.io/) | `pnpm add mush-api.js` |
 | [yarn](https://yarnpkg.com/) | `yarn add mush-api.js` |
-##### This package requires Node.js 18 or higher.
+##### Requires Node.js 18 or higher.
 
 ## 📡 Usage
-```typescript
-import { MushClient, Routes } from "mush-api.js";
+```javascript
+import { MushClient, MushAPIJSError } from "mush-api.js";
 // You can use CommonJS as well
-// const { MushClient, Routes } = require("mush-api.js");
+// const { MushClient, MushAPIJSError } = require("mush-api.js");
 
 const client = new MushClient();
 
-const player = await client.api.request(Routes.Player("mariaum"));
+try {
+  const player = await client.getPlayer("unknown");
 
-console.log(player);
+  console.log(player.username); // mariaum
+  console.log(player.rank.name); // Admin
+  console.log(player.bedwars.wins); // 29
+} catch (error) {
+  if (error instanceof MushAPIJSError) {
+    console.log(error.message); // Entity not found
+    console.log(error.statusCode); // 404
+  }
+}
 ```
-
-## 📝 To-do
-
-- Typings, classes and routes for Player, Game, Punishment & XP table
-- Rate limit handling
 
 ## ✨ Credits
 

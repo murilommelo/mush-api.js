@@ -1,0 +1,98 @@
+import type { APIPlayerHungerGamesStats } from "@stats-types/hungergames.js";
+import { HungerGamesArenaPVPStats } from "./Modes/ArenaPVP.js";
+import { HungerGamesAvengersStats } from "./Modes/Avengers.js";
+import { HungerGamesClanxClanStats } from "./Modes/ClanxClan.js";
+import { HungerGamesCommunityHGStats } from "./Modes/CommunityHG.js";
+import { HungerGamesDoubleKitStats } from "./Modes/DoubleKit.js";
+import { HungerGamesEventStats } from "./Modes/Event.js";
+import { HungerGamesGladiatorHGStats } from "./Modes/GladiatorHG.js";
+import { HungerGamesHGStats } from "./Modes/HG.js";
+import { HungerGamesInsaneHGStats } from "./Modes/InsaneHG.js";
+import { HungerGamesLootModeStats } from "./Modes/LootMode.js";
+import { HungerGamesMegaFastStats } from "./Modes/MegaFast.js";
+import { HungerGamesMegaMushStats } from "./Modes/MegaMush.js";
+import { HungerGamesMiniMushStats } from "./Modes/MiniMush.js";
+import { HungerGamesOldStats } from "./Modes/Old.js";
+import { HungerGamesQuarterQuellStats } from "./Modes/QuarterQuell.js";
+import { HungerGamesRandomKitStats } from "./Modes/RandomKit.js";
+import { HungerGamesSingleKitEventStats } from "./Modes/SingleKitEvent.js";
+import { HungerGamesSoloStats } from "./Modes/Solo.js";
+import { HungerGamesTeamHGStats } from "./Modes/TeamHG.js";
+import { HungerGamesTripleKitStats } from "./Modes/TripleKit.js";
+
+export interface HungerGamesStats {
+  arenaPvp: HungerGamesArenaPVPStats;
+  avengers: HungerGamesAvengersStats;
+  assists: number;
+  coins: number;
+  communityHG: HungerGamesCommunityHGStats;
+  cxc: HungerGamesClanxClanStats;
+  dailyKills: number;
+  dailyWins: number;
+  deaths: number;
+  doubleKit: HungerGamesDoubleKitStats;
+  event: HungerGamesEventStats;
+  gamesPlayed: number;
+  gladiatorHG: HungerGamesGladiatorHGStats;
+  hg: HungerGamesHGStats;
+  insaneHG: HungerGamesInsaneHGStats;
+  kd: number;
+  kills: number;
+  lootMode: HungerGamesLootModeStats;
+  maxKills: number;
+  megaFast: HungerGamesMegaFastStats;
+  megaMush: HungerGamesMegaMushStats;
+  miniMush: HungerGamesMiniMushStats;
+  monthlyKills: number;
+  monthlyWins: number;
+  old: HungerGamesOldStats;
+  quarterquell: HungerGamesQuarterQuellStats;
+  randomKit: HungerGamesRandomKitStats;
+  singleKitEvent: HungerGamesSingleKitEventStats;
+  solo: HungerGamesSoloStats;
+  teamHG: HungerGamesTeamHGStats;
+  tripleKit: HungerGamesTripleKitStats;
+  wins: number;
+  weeklyKills: number;
+  weeklyWins: number;
+}
+
+export class HungerGamesStats {
+  constructor(data: Partial<APIPlayerHungerGamesStats> = {}) {
+    this.coins = data.coins ?? 0;
+    this.deaths = data.deaths ?? 0;
+    this.gamesPlayed = data.games_played ?? 0;
+    this.kd = data.kd ?? 0;
+    this.assists = data.assists ?? 0;
+    this.kills = data.kills ?? 0;
+    this.maxKills = data.max_kills ?? 0;
+    this.wins = data.wins ?? 0;
+    this.dailyKills = data.kills_daily ?? 0;
+    this.monthlyKills = data.kills_monthly ?? 0;
+    this.weeklyKills = data.kills_weekly ?? 0;
+    this.dailyWins = data.wins_daily ?? 0;
+    this.weeklyWins = data.wins_weekly ?? 0;
+    this.monthlyWins = data.wins_monthly ?? 0;
+
+    this.arenaPvp = new HungerGamesArenaPVPStats(data);
+    this.avengers = new HungerGamesAvengersStats(data);
+    this.cxc = new HungerGamesClanxClanStats(data);
+    this.communityHG = new HungerGamesCommunityHGStats(data);
+    this.doubleKit = new HungerGamesDoubleKitStats(data);
+    this.event = new HungerGamesEventStats(data);
+    this.gladiatorHG = new HungerGamesGladiatorHGStats(data);
+    this.hg = new HungerGamesHGStats(data);
+    this.insaneHG = new HungerGamesInsaneHGStats(data);
+    this.lootMode = new HungerGamesLootModeStats(data);
+    this.megaFast = new HungerGamesMegaFastStats();
+    this.megaMush = new HungerGamesMegaMushStats(data);
+    this.miniMush = new HungerGamesMiniMushStats(data);
+    this.old = new HungerGamesOldStats(data);
+    this.quarterquell = new HungerGamesQuarterQuellStats(data);
+    this.randomKit = new HungerGamesRandomKitStats(data);
+    this.singleKitEvent = new HungerGamesSingleKitEventStats(data);
+    this.solo = new HungerGamesSoloStats(data);
+    this.teamHG = new HungerGamesTeamHGStats(data);
+    this.tripleKit = new HungerGamesTripleKitStats(data);
+  }
+}

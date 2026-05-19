@@ -1,6 +1,6 @@
 import type { APIGameLevelBadge, MapKeys, Period } from ".";
 
-type SkyWarsKit =
+export type SkyWarsKit =
   | "default"
   | "snowman"
   | "archer"

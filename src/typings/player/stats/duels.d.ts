@@ -49,9 +49,11 @@ type DuelsGameModeWithType =
 
 type AllDuelsGameMode = DuelsGameMode | DuelsGameModeWithType;
 
+type PVPDuelsGameMode = Exclude<AllDuelsGameMode, "lava" | "lava_solo">;
+
 type AllDuelsGameModeStats = MapKeys<AllDuelsGameMode, "", "_deaths"> &
-  MapKeys<AllDuelsGameMode, "", "_kills"> &
-  MapKeys<AllDuelsGameMode, "", `_kills_${Period}`> &
+  MapKeys<PVPDuelsGameMode, "", "_kills"> &
+  MapKeys<PVPDuelsGameMode, "", `_kills_${Period}`> &
   MapKeys<AllDuelsGameMode, "", "_losses"> &
   MapKeys<AllDuelsGameMode, "", "_max_winstreak"> &
   MapKeys<AllDuelsGameMode, "", "_played"> &
@@ -86,7 +88,7 @@ type BridgeBasedGameStats = MapKeys<
   | "bridge_solo"
   | "bridge_three",
   "",
-  "points"
+  "_points"
 >;
 
 type SoupBasedGameStats = MapKeys<

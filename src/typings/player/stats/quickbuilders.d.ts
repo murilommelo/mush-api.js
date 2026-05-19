@@ -3,7 +3,7 @@ import type { MapKeys, Period } from ".";
 type QuickBuilderStatsPerPeriod = MapKeys<Period, "wins_"> &
   MapKeys<Period, "xp_"> &
   MapKeys<Period, "winstreak_"> &
-  MapKeys<Period, "perfect_builds_streak">;
+  MapKeys<Period, "perfect_builds_streak_">;
 
 export interface APIPlayerQuickBuildersStats
   extends QuickBuilderStatsPerPeriod {

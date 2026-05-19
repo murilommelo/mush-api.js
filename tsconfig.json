@@ -9,7 +9,15 @@
     "newLine": "crlf",
     "rootDir": "src",
     "outDir": "dist",
-    "target": "esnext"
+    "target": "esnext",
+    "paths": {
+      "@stats-types/*": [
+        "./src/typings/player/stats/*"
+      ],
+      "@api-types/*": [
+        "./src/typings/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules"

@@ -1,7 +1,7 @@
 import type { Color, Month, Year } from "../..";
 import type { MapKeys, Period } from ".";
 
-interface HungerGamesRanking {
+export interface HungerGamesRanking {
   hex_color: Color;
   id: string;
   name: string;

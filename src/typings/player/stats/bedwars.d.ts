@@ -28,19 +28,19 @@ type BedWarsEventMode =
 type AllBedWarsMode = BedWarsMode | BedWarsEventMode;
 
 type BedWarsModeStats = MapKeys<AllBedWarsMode, "", "_games_played"> &
-  MapKeys<BedWarsMode, "", "_beds_broken"> &
-  MapKeys<BedWarsMode, "", "_beds_lost"> &
-  MapKeys<BedWarsMode, "", "_deaths"> &
-  MapKeys<BedWarsMode, "", "_final_deaths"> &
-  MapKeys<BedWarsMode, "", "_final_kills"> &
-  MapKeys<BedWarsMode, "", "_fkdr"> &
-  MapKeys<BedWarsMode, "", "_kills"> &
-  MapKeys<BedWarsMode, "", "_losses"> &
-  MapKeys<BedWarsMode, "", "_max_winstreak"> &
-  MapKeys<BedWarsMode, "", "_wins"> &
-  MapKeys<BedWarsMode, "", "_winstreak"> &
-  MapKeys<BedWarsMode, "", "_assists"> &
-  MapKeys<BedWarsMode, "", "_final_assists">;
+  MapKeys<AllBedWarsMode, "", "_beds_broken"> &
+  MapKeys<AllBedWarsMode, "", "_beds_lost"> &
+  MapKeys<AllBedWarsMode, "", "_deaths"> &
+  MapKeys<AllBedWarsMode, "", "_final_deaths"> &
+  MapKeys<AllBedWarsMode, "", "_final_kills"> &
+  MapKeys<AllBedWarsMode, "", "_fkdr"> &
+  MapKeys<AllBedWarsMode, "", "_kills"> &
+  MapKeys<AllBedWarsMode, "", "_losses"> &
+  MapKeys<AllBedWarsMode, "", "_max_winstreak"> &
+  MapKeys<AllBedWarsMode, "", "_wins"> &
+  MapKeys<AllBedWarsMode, "", "_winstreak"> &
+  MapKeys<AllBedWarsMode, "", "_assists"> &
+  MapKeys<AllBedWarsMode, "", "_final_assists">;
 
 type BedWarsModePeriodStats = MapKeys<BedWarsMode, "", `_kills_${Period}`> &
   MapKeys<BedWarsMode, "", `_wins_${Period}`> &
@@ -50,13 +50,13 @@ type BedWarsModePeriodStats = MapKeys<BedWarsMode, "", `_kills_${Period}`> &
 
 type BedWarsPeriodStats = MapKeys<Period, "level_"> &
   MapKeys<Period, "xp_"> &
-  MapKeys<Period, "_kills"> &
-  MapKeys<Period, "_wins"> &
-  MapKeys<Period, "_beds_broken"> &
-  MapKeys<Period, "_final_kills"> &
-  MapKeys<Period, "_winstreak">;
+  MapKeys<Period, "kills_"> &
+  MapKeys<Period, "wins_"> &
+  MapKeys<Period, "beds_broken_"> &
+  MapKeys<Period, "final_kills_"> &
+  MapKeys<Period, "winstreak_">;
 
-type ChampionYear = "2026";
+export type ChampionYear = "2026";
 
 type BedWarsChampionsStats = MapKeys<
   "final_points" | "final_rank" | "last_league" | "removed_points",
