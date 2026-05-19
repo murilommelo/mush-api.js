@@ -1,3 +1,7 @@
+import type { APIPlayerAccount } from "./player/player.js";
+
+export type CurrentYear = "2026";
+
 // Years that appear in the keys of the API objects
 export type Year =
   | "2019"
@@ -60,6 +64,20 @@ interface MushAPIErrorResponse {
 export type MushAPIResponse<T> =
   | MushAPISuccessResponse<T>
   | MushAPIErrorResponse;
+
+export type APILeaderboardMode =
+  | "bedwars"
+  | "skywars"
+  | "bridge"
+  | "hg"
+  | "minimush"
+  | "pvp"
+  | "soup"
+  | "gladiator"
+  | "party"
+  | "ctf"
+  | "quickbuilders"
+  | "murder";
 
 export type UUID = `${string}-${string}-${string}-${string}`;
 
@@ -205,9 +223,97 @@ export type MushRank =
 
 /**
  * The XP table object
- * 
+ *
  * Each key is the level and the value is the required XP amount
  */
-export type APIXPTableInfo = {
+export type APIGameModeXPTable = {
   [level: string]: number;
 };
+
+/**
+ * The game mode leaderboard object
+ *
+ * The keys vary depending on the game mode
+ *
+ *  Examples:
+ * - `bedwars:wins`
+ * - `quickbuilders:perfect_builds`
+ *
+ * Format: `<game>:<stat>`
+ */
+export interface ParsedAPIGameModeLeaderboard {
+  records: ({
+    pos: 1;
+    color: Color;
+    account: APIPlayerAccount;
+    avatar_url: string;
+  } & { [key: string]: number })[];
+}
+
+export type ModeLeaderboardPlayer<
+  M extends APILeaderboardMode = APILeaderboardMode,
+> = {
+  pos: 1;
+  color: Color;
+  account: APIPlayerAccount;
+  avatar_url: string;
+} & {
+  [K in ModeLeaderboardStatKeyMap[M][number]]: number;
+};
+
+interface ModeLeaderboardStatKeyMap {
+  bedwars: [
+    "bedwars:level",
+    "bedwars:wins",
+    "bedwars:kills",
+    "bedwars:final_kills",
+  ];
+  skywars: [
+    "skywars_r1:level",
+    "skywars_r1:wins",
+    "skywars_r1:kills",
+    "skywars_r1:losses",
+    "skywars_r1:coins",
+  ];
+  bridge: ["duels:bridge_wins", "duels:bridge_losses", "duels:bridge_points"];
+  hg: [
+    `hungergames:mode_${CurrentYear}_${TwoDigitMonth}_doublekit_rank_exp`,
+    "hungergames:wins",
+    "hungergames:kills",
+    "hungergames:deaths",
+    "hungergames:kd",
+  ];
+  minimush: [
+    `hungergames:mode_${CurrentYear}_${TwoDigitMonth}_minimush_rank_exp`,
+    "hungergames:mode_minimush_wins",
+    "hungergames:mode_minimush_kills",
+    "hungergames:mode_minimush_deaths",
+  ];
+  pvp: ["pvp:arena_kills", "pvp:arena_deaths", "pvp:arena_kdr"];
+  soup: [
+    `duels:soup_exp_${CurrentYear}-${TwoDigitMonth}`,
+    "duels:soup_wins",
+    "duels:soup_deaths",
+    "duels:soup_winstreak",
+  ];
+  gladiator: [
+    `duels:gladiator_exp_${CurrentYear}-${TwoDigitMonth}`,
+    "duels:gladiator_wins",
+    "duels:gladiator_deaths",
+    "duels:gladiator_winstreak",
+  ];
+  party: [
+    "party:points",
+    "party:first_place",
+    "party:second_place",
+    "party:third_place",
+  ];
+  ctf: ["ctf:captures", "ctf:kills", "ctf:coins"];
+  quickbuilders: [
+    "quickbuilders:wins",
+    "quickbuilders:losses",
+    "quickbuilders:perfect_builds",
+    "quickbuilders:builds",
+  ];
+  murder: ["murder:wins", "murder:losses"];
+}

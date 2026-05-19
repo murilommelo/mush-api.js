@@ -3,7 +3,7 @@ import { MUSH_API_URL } from "../utils/constants.js";
 import { MushAPIJSError } from "./Error.js";
 
 export class API {
-  async request<T>(route: string) {
+  protected async request<T>(route: string) {
     if (typeof globalThis.fetch !== "function") {
       throw new Error(
         "Unable to perform requests. Make sure you're running on Node.js version 18 or higher.",
@@ -13,7 +13,6 @@ export class API {
     const response = await fetch(MUSH_API_URL + route, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
         "User-Agent":
           "mush-api.js (+https://npmjs.com/package/mush-api.js, [VI]{{inject}}[/VI])",
       },
@@ -43,30 +42,40 @@ export class API {
       );
     }
 
-    const data = (await response.json()) as MushAPIResponse<T>;
+    const contentType = response.headers.get("Content-Type") ?? "";
 
-    // When providing an invalid profile ID or UUID in the /player/<idType>/<parameter> route
-    if (data.error_code === 400) {
-      throw new MushAPIJSError("Invalid parameter provided", 400, {
-        cause: route,
-      });
+    // Handling the /leaderboard/:mode route, because for some reason it returns plain text
+    switch (true) {
+      case contentType.includes("text/html"): {
+        return await response.text();
+      }
+      default: {
+        const data = (await response.json()) as MushAPIResponse<T>;
+
+        // When providing an invalid profile ID or UUID in the /player/<idType>/<parameter> route
+        if (data.error_code === 400) {
+          throw new MushAPIJSError("Invalid parameter provided", 400, {
+            cause: route,
+          });
+        }
+
+        // When the requested game or player doesn't exist
+        if (data.error_code === 404) {
+          throw new MushAPIJSError("Entity not found", 404, { cause: route });
+        }
+
+        // Unknown error detected
+        if (data.success === false) {
+          throw new MushAPIJSError(
+            "Unknown error while interacting with the API",
+            data.error_code,
+            { cause: { message: data.response?.message, route } },
+          );
+        }
+
+        // The only route that doesn't return the data in "response" is the XP table route, so we verify that here
+        return ("response" in data ? data.response : data) as T;
+      }
     }
-
-    // When the requested game or player doesn't exist
-    if (data.error_code === 404) {
-      throw new MushAPIJSError("Entity not found", 404, { cause: route });
-    }
-
-    // Unknown error detected
-    if (data.success === false) {
-      throw new MushAPIJSError(
-        "Unknown error while interacting with the API",
-        data.error_code,
-        { cause: { message: data.response?.message, route } },
-      );
-    }
-
-    // The only route that doesn't return the data in "response" is the XP table route, so we verify that here
-    return ("response" in data ? data.response : response) as T;
   }
 }

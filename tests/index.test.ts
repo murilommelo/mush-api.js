@@ -1,5 +1,5 @@
-import { describe, expect, test } from "vitest";
-import { MushClient, Player } from "../dist/index.js";
+import { assertType, describe, expect, test } from "vitest";
+import { ModeLeaderboard, MushClient, Player } from "../dist/index.js";
 
 const client = new MushClient();
 
@@ -15,6 +15,13 @@ describe("MushClient's methods", () => {
       },
     );
     // MushAPIJSError { statusCode: 404; }
+  });
+
+  test("MushClient#getLeaderboard() returns instance of ModeLeaderboard<'bedwars'>", async () => {
+    const leaderboard = client.getLeaderboard("bedwars");
+
+    await expect(leaderboard).resolves.toBeInstanceOf(ModeLeaderboard);
+    assertType<ModeLeaderboard<"bedwars">>(await leaderboard);
   });
 
   test("MushClient#getXPTable() returns Record<string, number>", async () => {

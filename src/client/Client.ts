@@ -1,5 +1,11 @@
-import type { APIXPTableInfo } from "@api-types/index";
+import type {
+  APIGameModeXPTable,
+  APILeaderboardMode,
+  ModeLeaderboardPlayer,
+  ParsedAPIGameModeLeaderboard,
+} from "@api-types/index";
 import type { APIPlayer } from "@api-types/player/player";
+import { ModeLeaderboard } from "../structures/Leaderboard/Leaderboard.js";
 import { Player } from "../structures/Player/Player.js";
 import { Routes } from "../utils/constants.js";
 import { isUUID } from "../utils/isUUID.js";
@@ -16,7 +22,7 @@ export class MushClient extends API {
       return this.getPlayerByUUID(username);
     }
 
-    const data = await this.request<APIPlayer>(Routes.Player(username));
+    const data = (await this.request(Routes.Player(username))) as APIPlayer;
 
     return new Player(data);
   }
@@ -29,7 +35,7 @@ export class MushClient extends API {
       );
     }
 
-    const data = await this.request<APIPlayer>(Routes.Player(uuid, "uuid"));
+    const data = (await this.request(Routes.Player(uuid, "uuid"))) as APIPlayer;
 
     return new Player(data);
   }
@@ -42,14 +48,25 @@ export class MushClient extends API {
       );
     }
 
-    const data = await this.request<APIPlayer>(
+    const data = (await this.request(
       Routes.Player(profileId, "profileid"),
-    );
+    )) as APIPlayer;
 
     return new Player(data);
   }
 
+  async getLeaderboard<M extends APILeaderboardMode>(mode: M) {
+    const leaderboard = await this.request<string>(Routes.Leaderboard(mode));
+
+    const parsed: ParsedAPIGameModeLeaderboard = JSON.parse(leaderboard);
+
+    return new ModeLeaderboard<M>(
+      mode,
+      parsed.records as ModeLeaderboardPlayer<M>[],
+    );
+  }
+
   async getXPTable(mode: "bedwars" | "skywars" | "duels") {
-    return await this.request<APIXPTableInfo>(Routes.XPTable(mode));
+    return (await this.request(Routes.XPTable(mode))) as APIGameModeXPTable;
   }
 }
