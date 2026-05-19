@@ -34,7 +34,7 @@ import { MushClient, MushAPIJSError } from "mush-api.js";
 const client = new MushClient();
 
 try {
-  const player = await client.getPlayer("unknown");
+  const player = await client.getPlayer("mariaum");
 
   console.log(player.username); // mariaum
   console.log(player.rank.name); // Admin
