@@ -1,30 +1,31 @@
-import type { APIPlayerBridgePracticeStats } from "@stats-types/bridgepractice";
-import { BridgePracticeDiagonalStats } from "./Modes/Diagonal.js";
-import { BridgePracticeDiagonalShortStats } from "./Modes/DiagonalShort.js";
-import { BridgePracticeExtraShortStats } from "./Modes/ExtraShort.js";
-import { BridgePracticeInfiniteStats } from "./Modes/Infinite.js";
-import { BridgePracticeLongStats } from "./Modes/Long.js";
-import { BridgePracticeNormalStats } from "./Modes/Normal.js";
-import { BridgePracticeShortStats } from "./Modes/Short.js";
-
-export interface BridgePracticeStats {
-  diagonal: BridgePracticeDiagonalStats;
-  diagonalShort: BridgePracticeDiagonalShortStats;
-  extraShort: BridgePracticeExtraShortStats;
-  infinite: BridgePracticeInfiniteStats;
-  long: BridgePracticeLongStats;
-  normal: BridgePracticeNormalStats;
-  short: BridgePracticeShortStats;
-}
+import type {
+  APIPlayerBridgePracticeStats,
+  BridgePracticeMode,
+} from "@stats-types/bridgepractice.js";
 
 export class BridgePracticeStats {
+  public getModeStats: (mode: BridgePracticeMode) => {
+    mode: BridgePracticeMode;
+    bestTime: number;
+    attempts: number;
+    bridges: number;
+    totalTime: number;
+  };
+
   constructor(data: Partial<APIPlayerBridgePracticeStats> = {}) {
-    this.diagonal = new BridgePracticeDiagonalStats(data);
-    this.diagonalShort = new BridgePracticeDiagonalShortStats(data);
-    this.extraShort = new BridgePracticeExtraShortStats(data);
-    this.infinite = new BridgePracticeInfiniteStats(data);
-    this.long = new BridgePracticeLongStats(data);
-    this.normal = new BridgePracticeNormalStats(data);
-    this.short = new BridgePracticeShortStats(data);
+    this.getModeStats = function getModeStats(mode: BridgePracticeMode) {
+      const bestTime = data[`${mode}_best_time`] ?? 0;
+      const attempts = data[`${mode}_bridge_attempts`] ?? 0;
+      const bridges = data[`${mode}_bridges`] ?? 0;
+      const totalTime = data[`${mode}_total_time`] ?? 0;
+
+      return {
+        mode,
+        bestTime,
+        attempts,
+        bridges,
+        totalTime,
+      };
+    };
   }
 }

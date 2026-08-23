@@ -1,7 +1,7 @@
 {
   "name": "mush-api.js",
   "description": "Unofficial Mush API wrapper for Node.js",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -37,16 +37,16 @@
   },
   "scripts": {
     "test": "vitest run --typecheck",
-    "build": "tsc --noEmit && tsup",
+    "build": "tsc --noEmit && tsdown",
     "lint": "biome check --write"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.6",
-    "@types/node": "^25.5.0",
-    "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
-    "unplugin-replace": "^0.7.0",
-    "vitest": "^4.1.0"
+    "@biomejs/biome": "^2.5.10",
+    "@types/node": "^26.2.0",
+    "tsdown": "^0.22.14",
+    "typescript": "^7.0.2",
+    "unplugin-replace": "^0.9.0",
+    "vitest": "^4.1.11"
   },
   "engines": {
     "node": ">= 18"

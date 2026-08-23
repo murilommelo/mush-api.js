@@ -2,25 +2,23 @@ import type { APIPlayerHideAndSeekStats } from "@stats-types/seek";
 import { HideAndSeekHiderStats } from "./Hider";
 import { HideAndSeekSeekerStats } from "./Seeker";
 
-export interface HideAndSeekStats {
-  dailyWins: number;
-  dailyWinstreak: number;
-  deaths: number;
-  gamesPlayed: number;
-  kills: number;
-  losses: number;
-  maxWinstreak: number;
-  monthlyWins: number;
-  monthlyWinstreak: number;
-  weeklyWins: number;
-  weeklyWinstreak: number;
-  wins: number;
-  winstreak: number;
-  hiderRole: HideAndSeekHiderStats;
-  seekerRole: HideAndSeekSeekerStats;
-}
-
 export class HideAndSeekStats {
+  public dailyWins: number;
+  public dailyWinstreak: number;
+  public deaths: number;
+  public gamesPlayed: number;
+  public kills: number;
+  public losses: number;
+  public maxWinstreak: number;
+  public monthlyWins: number;
+  public monthlyWinstreak: number;
+  public weeklyWins: number;
+  public weeklyWinstreak: number;
+  public wins: number;
+  public winstreak: number;
+  public hiderRole: HideAndSeekHiderStats;
+  public seekerRole: HideAndSeekSeekerStats;
+
   constructor(data: Partial<APIPlayerHideAndSeekStats> = {}) {
     this.deaths = data.deaths ?? 0;
     this.kills = data.kills ?? 0;
@@ -35,7 +33,6 @@ export class HideAndSeekStats {
     this.dailyWinstreak = data.winstreak_daily ?? 0;
     this.monthlyWinstreak = data.winstreak_monthly ?? 0;
     this.weeklyWinstreak = data.winstreak_weekly ?? 0;
-
     this.hiderRole = new HideAndSeekHiderStats(data);
     this.seekerRole = new HideAndSeekSeekerStats(data);
   }

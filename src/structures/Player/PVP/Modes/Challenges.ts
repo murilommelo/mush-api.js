@@ -1,30 +1,34 @@
-import type { APIPlayerPVPStats } from "@stats-types/pvp";
-import { PVPChallengesDropsStats } from "./Challenges/Drops.js";
-import { PVPChallengesEasyStats } from "./Challenges/Easy.js";
-import { PVPChallengesExtremeStats } from "./Challenges/Extreme.js";
-import { PVPChallengesHardStats } from "./Challenges/Hard.js";
-import { PVPChallengesMediumStats } from "./Challenges/Medium.js";
-import { PVPChallengesVaryingStats } from "./Challenges/Varying.js";
-import { PVPChallengesWitherStats } from "./Challenges/Wither.js";
-
-export interface PVPChallengesStats {
-  easy: PVPChallengesEasyStats;
-  medium: PVPChallengesMediumStats;
-  hard: PVPChallengesHardStats;
-  extreme: PVPChallengesExtremeStats;
-  varying: PVPChallengesVaryingStats;
-  drops: PVPChallengesDropsStats;
-  wither: PVPChallengesWitherStats;
-}
+import type { APIPlayerPVPStats, ChallengesMode } from "@stats-types/pvp";
 
 export class PVPChallengesStats {
+  public getLevelStats: (level: ChallengesMode) => {
+    level: ChallengesMode;
+    maxDamageTaken: number;
+    maxPlayTime: number;
+    plays: number;
+    soupsUsed: number;
+    damageTaken: number;
+    playTime: number;
+  };
+
   constructor(data: Partial<APIPlayerPVPStats> = {}) {
-    this.easy = new PVPChallengesEasyStats(data);
-    this.medium = new PVPChallengesMediumStats(data);
-    this.hard = new PVPChallengesHardStats(data);
-    this.extreme = new PVPChallengesExtremeStats(data);
-    this.varying = new PVPChallengesVaryingStats(data);
-    this.drops = new PVPChallengesDropsStats(data);
-    this.wither = new PVPChallengesWitherStats(data);
+    this.getLevelStats = function getLevelStats(level: ChallengesMode) {
+      const maxDamageTaken = data[`challenges_${level}_max_damage_taken`] ?? 0;
+      const maxPlayTime = data[`challenges_${level}_max_play_time`] ?? 0;
+      const plays = data[`challenges_${level}_plays`] ?? 0;
+      const soupsUsed = data[`challenges_${level}_soups_used`] ?? 0;
+      const damageTaken = data[`challenges_${level}_total_damage_taken`] ?? 0;
+      const playTime = data[`challenges_${level}_total_play_time`] ?? 0;
+
+      return {
+        level,
+        maxDamageTaken,
+        maxPlayTime,
+        plays,
+        soupsUsed,
+        damageTaken,
+        playTime,
+      };
+    };
   }
 }

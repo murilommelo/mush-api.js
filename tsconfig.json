@@ -10,6 +10,7 @@
     "rootDir": "src",
     "outDir": "dist",
     "target": "esnext",
+    "types": ["node"],
     "paths": {
       "@stats-types/*": [
         "./src/typings/player/stats/*"

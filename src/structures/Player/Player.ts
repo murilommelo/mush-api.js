@@ -4,10 +4,6 @@ import { BedWarsStats } from "./BedWars/BedWars.js";
 import { BlockPartyStats } from "./BlockParty/BlockParty";
 import { BridgePracticeStats } from "./BridgePractice/BridgePractice.js";
 import { BuildBattleStats } from "./BuildBattle/BuildBattle";
-import { BuildBattleDoublesStats } from "./BuildBattle/BuildBattleDoubles";
-import { BuildBattleMiniStats } from "./BuildBattle/BuildBattleMini";
-import { BuildBattleProStats } from "./BuildBattle/BuildBattlePro";
-import { BuildBattleSoloStats } from "./BuildBattle/BuildBattleSolo";
 import { Clan } from "./Clan";
 import { CaptureTheFlagStats } from "./CTF/CTF";
 import { Discord } from "./Discord.js";
@@ -21,48 +17,41 @@ import { QuickBuildersStats } from "./QuickBuilders/QuickBuilders.js";
 import { SkyWarsStats } from "./SkyWars/SkyWars.js";
 import { Tag } from "./Tag";
 
-export interface Player {
-  profileId: number;
-  username: string;
-  uuid: string;
-  premium: boolean;
-  discord: Discord | null;
-  clan: Clan | null;
-  availableTags: MushRank[];
-  bestTag: Tag;
-  rank: Tag;
-  tag: Tag;
-  skinHash: string;
-  availableMedals: MushMedal[];
-  medal: MushMedal;
-  firstLogin: Date | null;
-  lastLogin: Date | null;
-  online: boolean;
-  muted: boolean;
-  muteCount: number;
-  banned: boolean;
-  banCount: number;
-
-  bedWars: BedWarsStats;
-  blockParty: BlockPartyStats;
-  bridgePractice: BridgePracticeStats;
-  buildBattle: BuildBattleStats;
-  buildBattleSolo: BuildBattleSoloStats;
-  buildBattleDoubles: BuildBattleDoublesStats;
-  buildBattlePro: BuildBattleProStats;
-  buildBattleMini: BuildBattleMiniStats;
-  captureTheFlag: CaptureTheFlagStats;
-  duels: DuelsStats;
-  hideAndSeek: HideAndSeekStats;
-  hungerGames: HungerGamesStats;
-  murder: MurderStats;
-  partyGames: PartyStats;
-  pvp: PVPStats;
-  quickBuilders: QuickBuildersStats;
-  skyWars: SkyWarsStats;
-}
-
 export class Player {
+  public profileId: number;
+  public username: string;
+  public uuid: string;
+  public premium: boolean;
+  public discord: Discord | null;
+  public clan: Clan | null;
+  public availableTags: MushRank[];
+  public bestTag: Tag;
+  public rank: Tag;
+  public tag: Tag;
+  public skinHash: string;
+  public availableMedals: MushMedal[];
+  public medal: MushMedal;
+  public firstLogin: Date | null;
+  public lastLogin: Date | null;
+  public online: boolean;
+  public muted: boolean;
+  public muteCount: number;
+  public banned: boolean;
+  public banCount: number;
+  public bedWars: BedWarsStats;
+  public blockParty: BlockPartyStats;
+  public bridgePractice: BridgePracticeStats;
+  public buildBattle: BuildBattleStats;
+  public captureTheFlag: CaptureTheFlagStats;
+  public duels: DuelsStats;
+  public hideAndSeek: HideAndSeekStats;
+  public hungerGames: HungerGamesStats;
+  public murder: MurderStats;
+  public partyGames: PartyStats;
+  public pvp: PVPStats;
+  public quickBuilders: QuickBuildersStats;
+  public skyWars: SkyWarsStats;
+
   constructor(data: APIPlayer) {
     this.profileId = data.account.profile_id;
     this.username = data.account.username;
@@ -80,14 +69,14 @@ export class Player {
     } else {
       this.clan = null;
     }
+    this.skinHash = data.skin.hash;
 
     this.bestTag = new Tag(data.best_tag);
     this.rank = new Tag(data.rank_tag);
-    this.tag = new Tag(data.profile_tag);
-
-    this.skinHash = data.skin.hash;
-
+    
     this.availableTags = data.tags;
+    this.tag = new Tag(data.profile_tag);
+    
     this.availableMedals = data.medals;
     this.medal = data.medal;
 
@@ -117,18 +106,6 @@ export class Player {
       data.stats?.bridgepractice ?? {},
     );
     this.buildBattle = new BuildBattleStats(data.stats?.buildbattle ?? {});
-    this.buildBattleSolo = new BuildBattleSoloStats(
-      data.stats?.buildbattle ?? {},
-    );
-    this.buildBattleDoubles = new BuildBattleDoublesStats(
-      data.stats?.buildbattle ?? {},
-    );
-    this.buildBattlePro = new BuildBattleProStats(
-      data.stats?.buildbattle ?? {},
-    );
-    this.buildBattleMini = new BuildBattleMiniStats(
-      data.stats?.buildbattle ?? {},
-    );
     this.captureTheFlag = new CaptureTheFlagStats(data.stats?.ctf ?? {});
     this.duels = new DuelsStats(data.stats?.duels ?? {});
     this.hideAndSeek = new HideAndSeekStats(data.stats?.seek ?? {});

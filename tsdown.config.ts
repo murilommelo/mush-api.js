@@ -1,26 +1,28 @@
-import { defineConfig } from "tsup";
-import Replace from "unplugin-replace/esbuild";
-import Package from "./package.json";
+import { defineConfig } from "tsdown";
+import Replace from "unplugin-replace/rolldown";
+import packageJson from "./package.json" with { type: "json" };
 
 export default defineConfig({
   entry: ["src/index.ts"],
   format: ["esm", "cjs"],
   target: "es2022",
-  skipNodeModulesBundle: true,
   clean: true,
   shims: true,
   dts: true,
-  esbuildPlugins: [
+  plugins: [
     Replace({
       include: [/\.ts$/],
       values: [
         {
           find: /\[VI\]{{inject}}\[\/VI\]/,
           replacement() {
-            return Package.version;
+            return packageJson.version;
           },
         },
       ],
     }),
   ],
+  deps: {
+    neverBundle: true,
+  },
 });

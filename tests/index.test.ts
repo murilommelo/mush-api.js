@@ -1,33 +1,51 @@
 import { assertType, describe, expect, test } from "vitest";
-import { ModeLeaderboard, MushClient, Player } from "../dist/index.js";
+import {
+  getLeaderboard,
+  getPlayer,
+  getPlayerByProfileId,
+  getPlayerByUUID,
+  getXPTable,
+  ModeLeaderboard,
+  Player,
+} from "../dist/index.js";
 
-const client = new MushClient();
-
-describe("MushClient's methods", () => {
-  test("MushClient#getPlayer() returns instance of Player", async () => {
-    await expect(client.getPlayer("mariaum")).resolves.toBeInstanceOf(Player);
+describe("mush-api.js", () => {
+  test("getPlayer() returns instance of Player", async () => {
+    await expect(getPlayer("mariaum")).resolves.toBeInstanceOf(Player);
   });
 
-  test("MushClient#getPlayer() throws 404 statusCode error", async () => {
-    await expect(client.getPlayer("player desconhecido")).rejects.toMatchObject(
-      {
-        statusCode: 404,
-      },
-    );
-    // MushAPIJSError { statusCode: 404; }
+  test("getPlayer() throws 404 error", async () => {
+    await expect(getPlayer("player desconhecido")).rejects.toMatchObject({
+      message: "Entity not found",
+      statusCode: 404,
+    });
   });
 
-  test("MushClient#getLeaderboard() returns instance of ModeLeaderboard<'bedwars'>", async () => {
-    const leaderboard = client.getLeaderboard("bedwars");
+  test("getPlayerByUUID() throws 4001 error", async () => {
+    await expect(getPlayerByUUID("player desconhecido")).rejects.toMatchObject({
+      message: 'The "uuid" parameter must be a valid Minecraft UUID',
+      statusCode: 4001,
+    });
+  });
+
+  test("getPlayerByProfileId() throws 404 error", async () => {
+    await expect(getPlayerByProfileId(9007199254740991)).rejects.toMatchObject({
+      message: "Entity not found",
+      statusCode: 404,
+    });
+  });
+
+  test("getLeaderboard() returns instance of ModeLeaderboard<'bedwars'>", async () => {
+    const leaderboard = getLeaderboard("bedwars");
 
     await expect(leaderboard).resolves.toBeInstanceOf(ModeLeaderboard);
     assertType<ModeLeaderboard<"bedwars">>(await leaderboard);
   });
 
-  test("MushClient#getXPTable() returns Record<string, number>", async () => {
-    const xpTable = await client.getXPTable("bedwars");
+  test("getXPTable() returns Record<string, number>", async () => {
+    const xpTable = await getXPTable("bedwars");
 
     expect(xpTable["0"]).toBeTypeOf("number");
-    // Record<string, number>;
+    assertType<Record<string, number>>(xpTable);
   });
 });

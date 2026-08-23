@@ -1,6 +1,6 @@
 import type { MapKeys, Period } from ".";
 
-type MurderRole =
+export type MurderRole =
   | "detective"
   | "innocent"
   | "medic"

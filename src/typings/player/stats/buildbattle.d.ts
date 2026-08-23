@@ -1,6 +1,6 @@
 import type { GamePlace, MapKeys, Period } from ".";
 
-type BuildBattleMode = "mini" | "solo" | "doubles" | "pro";
+export type BuildBattleMode = "mini" | "solo" | "doubles" | "pro";
 
 type BuildBattleStatsPerPeriod = MapKeys<Period, "perfects_"> &
   MapKeys<Period, "played_"> &
@@ -25,7 +25,7 @@ type BuildBattleStatsPerMode = MapKeys<BuildBattleMode, "", "_played"> &
   MapKeys<BuildBattleMode, "", "_losses"> &
   MapKeys<BuildBattleMode, "", "_votes"> &
   MapKeys<BuildBattleMode, "", "_perfects"> &
-  MapKeys<BuildBattleMode, "", `_${GamePlace}`> &
+  MapKeys<BuildBattleMode, "", `_${Exclude<GamePlace, "first_place">}`> &
   MapKeys<BuildBattleMode, "", "_max_winstreak">;
 
 export interface APIPlayerBuildBattleStats

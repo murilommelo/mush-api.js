@@ -5,14 +5,12 @@ import type {
   APIGameLevelBadgeFormatType,
 } from "@stats-types/index";
 
-export interface LevelBadge {
-  color: Color | null;
-  symbol: string | null;
-  minLevel: number;
-  format: string;
-}
-
 export class LevelBadge {
+  public color: Color | null;
+  public symbol: string | null;
+  public minLevel: number;
+  public format: string;
+
   constructor(data: APIGameLevelBadge) {
     this.minLevel = data.min_level;
     this.format = data.format;

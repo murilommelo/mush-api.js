@@ -1,6 +1,6 @@
 import type { MapKeys } from ".";
 
-type BridgePracticeMode =
+export type BridgePracticeMode =
   | "extra_short"
   | "diagonal_short"
   | "diagonal"

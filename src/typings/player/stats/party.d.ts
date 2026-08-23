@@ -1,6 +1,6 @@
 import type { GamePlace, MapKeys, Period } from ".";
 
-type PartyGame =
+export type PartyGame =
   | "block_party"
   | "fisherman"
   | "grappler_race"
@@ -10,12 +10,7 @@ type PartyGame =
   | "oitc"
   | "race"
   | "stomper"
-  | "tnt_run"
-  | "hunter"
-  | "arena_pvp"
-  | "barbarian"
-  | "quake"
-  | "spleef";
+  | "tnt_run";
 
 type PartyStatsPerGame = MapKeys<PartyGame, "", "_played"> &
   MapKeys<PartyGame, "", "_points"> &

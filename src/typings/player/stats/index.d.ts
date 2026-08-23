@@ -47,7 +47,7 @@ export type MapKeys<
 
 export type Period = "daily" | "weekly" | "monthly";
 
-export type GamePlace = "second_place" | "third_place";
+export type GamePlace = "first_place" | "second_place" | "third_place";
 
 export interface APIPlayerStats {
   bedwars?: Partial<APIPlayerBedWarsStats>;

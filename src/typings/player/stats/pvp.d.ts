@@ -1,6 +1,6 @@
 import type { MapKeys, Period } from ".";
 
-type ChallengesMode =
+export type ChallengesMode =
   | "easy"
   | "medium"
   | "hard"

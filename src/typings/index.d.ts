@@ -1,6 +1,6 @@
 import type { APIPlayerAccount } from "./player/player.js";
 
-export type CurrentYear = "2026";
+export type CurrentYear = "[VI]{{inject}}[/VI]";
 
 // Years that appear in the keys of the API objects
 export type Year =
@@ -241,7 +241,7 @@ export type APIGameModeXPTable = {
  *
  * Format: `<game>:<stat>`
  */
-export interface ParsedAPIGameModeLeaderboard {
+export interface APIGameModeLeaderboard {
   records: ({
     pos: 1;
     color: Color;

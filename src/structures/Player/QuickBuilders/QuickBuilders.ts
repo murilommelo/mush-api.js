@@ -1,32 +1,30 @@
 import type { APIPlayerQuickBuildersStats } from "@stats-types/quickbuilders";
 
-export interface QuickBuildersStats {
-  builds: number;
-  level: number;
-  losses: number;
-  maxPerfectBuildStreak: number;
-  maxWinstreak: number;
-  perfectBuilds: number;
-  perfectBuildsStreak: number;
-  dailyPerfectBuildsStreak: number;
-  weeklyPerfectBuildsStreak: number;
-  monthlyPerfectBuildsStreak: number;
-  gamesPlayed: number;
-  wins: number;
-  dailyWins: number;
-  weeklyWins: number;
-  monthlyWins: number;
-  winstreak: number;
-  dailyWinstreak: number;
-  weeklyWinstreak: number;
-  monthlyWinstreak: number;
-  xp: number;
-  dailyXp: number;
-  weeklyXp: number;
-  monthlyXp: number;
-}
-
 export class QuickBuildersStats {
+  public builds: number;
+  public level: number;
+  public losses: number;
+  public maxPerfectBuildStreak: number;
+  public maxWinstreak: number;
+  public perfectBuilds: number;
+  public perfectBuildsStreak: number;
+  public dailyPerfectBuildsStreak: number;
+  public weeklyPerfectBuildsStreak: number;
+  public monthlyPerfectBuildsStreak: number;
+  public gamesPlayed: number;
+  public wins: number;
+  public dailyWins: number;
+  public weeklyWins: number;
+  public monthlyWins: number;
+  public winstreak: number;
+  public dailyWinstreak: number;
+  public weeklyWinstreak: number;
+  public monthlyWinstreak: number;
+  public xp: number;
+  public dailyXp: number;
+  public weeklyXp: number;
+  public monthlyXp: number;
+
   constructor(data: Partial<APIPlayerQuickBuildersStats> = {}) {
     this.builds = data.builds ?? 0;
     this.level = data.level ?? 0;

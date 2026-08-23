@@ -10,49 +10,49 @@ export const Routes = {
    * - `/player/:idType/:player`
    */
   Player(player: string | number, idType: IDType = "name") {
-    return `/player/${idType}/${player}` as const;
+    return `/player/${idType}/${player}`;
   },
   /**
    * Player BedWars Quick Buy route
    * - `/player/:idType/:player/bedwars`
    */
   PlayerBedWarsQuickBuy(player: string | number, idType: IDType = "name") {
-    return `/player/${idType}/${player}/bedwars` as const;
+    return `/player/${idType}/${player}/bedwars`;
   },
   /**
    * Player QuickBuilders records route
    * - `/player/:idType/:player/quickbuilders`
    */
   PlayerQuickBuildersRecords(player: string | number, idType: IDType = "name") {
-    return `/player/${idType}/${player}/quickbuilders` as const;
+    return `/player/${idType}/${player}/quickbuilders`;
   },
   /**
    * Player missions route
    * - `/player/:idType/:player/missions`
    */
   PlayerMissions(player: string | number, idType: IDType = "name") {
-    return `/player/${idType}/${player}/missions` as const;
+    return `/player/${idType}/${player}/missions`;
   },
   /**
    * Player equipped SkyWars perks route
    * - `/player/:idType/:player/skywars`
    */
   PlayerSkyWarsPerks(player: string | number, idType: IDType = "name") {
-    return `/player/${idType}/${player}/skywars` as const;
+    return `/player/${idType}/${player}/skywars`;
   },
   /**
    * Player lobby parkour records route
    * - `/player/:idType/:player/parkour`
    */
   PlayerParkourRecords(player: string | number, idType: IDType = "name") {
-    return `/player/${idType}/${player}/parkour` as const;
+    return `/player/${idType}/${player}/parkour`;
   },
   /**
    * Player equipped cosmetics route
    * - `/player/:idType/:player/cosmetics`
    */
   PlayerEquippedCosmetics(player: string | number, idType: IDType = "name") {
-    return `/player/${idType}/${player}/cosmetics` as const;
+    return `/player/${idType}/${player}/cosmetics`;
   },
   /**
    * Leaderboard route for a game mode
@@ -66,6 +66,6 @@ export const Routes = {
    * - `/games/:mode/xptable`
    */
   XPTable(mode: "bedwars" | "skywars" | "duels") {
-    return `/games/${mode}/xptable` as const;
+    return `/games/${mode}/xptable`;
   },
 };

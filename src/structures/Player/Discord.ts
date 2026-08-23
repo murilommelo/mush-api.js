@@ -1,18 +1,16 @@
 import type { APIPlayerDiscord } from "@api-types/player/player";
 
-export interface Discord {
-  id: string;
-  globalName: string;
-  username: string;
-  avatarHash: string;
-}
-
 interface DiscordAvatarURLOptions {
   extension?: "webp" | "png" | "jpg" | "jpeg" | "gif";
   size?: 16 | 32 | 64 | 128 | 256 | 512 | 1024 | 2048 | 4096;
 }
 
 export class Discord {
+  public id: string;
+  public globalName: string;
+  public username: string;
+  public avatarHash: string;
+
   constructor(data: APIPlayerDiscord) {
     this.id = data.id;
     this.globalName = data.global_name;

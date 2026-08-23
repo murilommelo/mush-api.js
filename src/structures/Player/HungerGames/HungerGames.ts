@@ -20,44 +20,42 @@ import { HungerGamesSoloStats } from "./Modes/Solo.js";
 import { HungerGamesTeamHGStats } from "./Modes/TeamHG.js";
 import { HungerGamesTripleKitStats } from "./Modes/TripleKit.js";
 
-export interface HungerGamesStats {
-  arenaPvp: HungerGamesArenaPVPStats;
-  avengers: HungerGamesAvengersStats;
-  assists: number;
-  coins: number;
-  communityHG: HungerGamesCommunityHGStats;
-  cxc: HungerGamesClanxClanStats;
-  dailyKills: number;
-  dailyWins: number;
-  deaths: number;
-  doubleKit: HungerGamesDoubleKitStats;
-  event: HungerGamesEventStats;
-  gamesPlayed: number;
-  gladiatorHG: HungerGamesGladiatorHGStats;
-  hg: HungerGamesHGStats;
-  insaneHG: HungerGamesInsaneHGStats;
-  kd: number;
-  kills: number;
-  lootMode: HungerGamesLootModeStats;
-  maxKills: number;
-  megaFast: HungerGamesMegaFastStats;
-  megaMush: HungerGamesMegaMushStats;
-  miniMush: HungerGamesMiniMushStats;
-  monthlyKills: number;
-  monthlyWins: number;
-  old: HungerGamesOldStats;
-  quarterquell: HungerGamesQuarterQuellStats;
-  randomKit: HungerGamesRandomKitStats;
-  singleKitEvent: HungerGamesSingleKitEventStats;
-  solo: HungerGamesSoloStats;
-  teamHG: HungerGamesTeamHGStats;
-  tripleKit: HungerGamesTripleKitStats;
-  wins: number;
-  weeklyKills: number;
-  weeklyWins: number;
-}
-
 export class HungerGamesStats {
+  public assists: number;
+  public coins: number;
+  public dailyKills: number;
+  public dailyWins: number;
+  public deaths: number;
+  public gamesPlayed: number;
+  public kd: number;
+  public kills: number;
+  public maxKills: number;
+  public monthlyKills: number;
+  public monthlyWins: number;
+  public wins: number;
+  public weeklyKills: number;
+  public weeklyWins: number;
+  public old: HungerGamesOldStats;
+  public arenaPvp: HungerGamesArenaPVPStats;
+  public avengers: HungerGamesAvengersStats;
+  public communityHG: HungerGamesCommunityHGStats;
+  public cxc: HungerGamesClanxClanStats;
+  public doubleKit: HungerGamesDoubleKitStats;
+  public event: HungerGamesEventStats;
+  public gladiatorHG: HungerGamesGladiatorHGStats;
+  public hg: HungerGamesHGStats;
+  public insaneHG: HungerGamesInsaneHGStats;
+  public lootMode: HungerGamesLootModeStats;
+  public megaFast: HungerGamesMegaFastStats;
+  public megaMush: HungerGamesMegaMushStats;
+  public miniMush: HungerGamesMiniMushStats;
+  public quarterquell: HungerGamesQuarterQuellStats;
+  public randomKit: HungerGamesRandomKitStats;
+  public singleKitEvent: HungerGamesSingleKitEventStats;
+  public solo: HungerGamesSoloStats;
+  public teamHG: HungerGamesTeamHGStats;
+  public tripleKit: HungerGamesTripleKitStats;
+
   constructor(data: Partial<APIPlayerHungerGamesStats> = {}) {
     this.coins = data.coins ?? 0;
     this.deaths = data.deaths ?? 0;
@@ -73,7 +71,6 @@ export class HungerGamesStats {
     this.dailyWins = data.wins_daily ?? 0;
     this.weeklyWins = data.wins_weekly ?? 0;
     this.monthlyWins = data.wins_monthly ?? 0;
-
     this.arenaPvp = new HungerGamesArenaPVPStats(data);
     this.avengers = new HungerGamesAvengersStats(data);
     this.cxc = new HungerGamesClanxClanStats(data);

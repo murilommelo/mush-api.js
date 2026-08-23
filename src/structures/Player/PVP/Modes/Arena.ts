@@ -1,16 +1,14 @@
 import type { APIPlayerPVPStats } from "@stats-types/pvp";
 
-export interface PVPArenaStats {
-    dailyKills: number;
-  deaths: number;
-  kills: number;
-  killstreak: number;
-  maxKillstreak: number;
-  monthlyKills: number;
-  weeklyKills: number;
-}
-
 export class PVPArenaStats {
+  public dailyKills: number;
+  public deaths: number;
+  public kills: number;
+  public killstreak: number;
+  public maxKillstreak: number;
+  public monthlyKills: number;
+  public weeklyKills: number;
+
   constructor(data: Partial<APIPlayerPVPStats> = {}) {
     this.deaths = data.arena_deaths ?? 0;
     this.kills = data.arena_kills ?? 0;

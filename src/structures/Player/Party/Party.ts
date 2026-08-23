@@ -1,47 +1,26 @@
-import type { APIPlayerPartyStats } from "@stats-types/party";
-import { PartyArenaPVPStats } from "./MiniGames/ArenaPvP.js";
-import { PartyBarbarianStats } from "./MiniGames/Barbarian.js";
-import { PartyBlockPartyStats } from "./MiniGames/BlockParty.js";
-import { PartyFishermanStats } from "./MiniGames/Fisherman.js";
-import { PartyGrapplerStats } from "./MiniGames/Grappler.js";
-import { PartyHunterStats } from "./MiniGames/Hunter.js";
-import { PartyKangarooStats } from "./MiniGames/Kangaroo.js";
-import { PartyLavaStats } from "./MiniGames/Lava.js";
-import { PartyMLGSumoStats } from "./MiniGames/MLGSumo.js";
-import { PartyOITCStats } from "./MiniGames/OITC.js";
-import { PartyQuakeStats } from "./MiniGames/Quake.js";
-import { PartyRaceStats } from "./MiniGames/Race.js";
-import { PartySpleefStats } from "./MiniGames/Spleef.js";
-import { PartyStomperStats } from "./MiniGames/Stomper.js";
-import { PartyTNTRunStats } from "./MiniGames/TNTRun.js";
-
-export interface PartyStats {
-  dailyPoints: number;
-  gamesPlayed: number;
-  monthlyPoints: number;
-  points: number;
-  secondPlace: number;
-  thirdPlace: number;
-  wins: number;
-  weeklyPoints: number;
-  arenaPVP: PartyArenaPVPStats;
-  barbarian: PartyBarbarianStats;
-  blockParty: PartyBlockPartyStats;
-  fisherman: PartyFishermanStats;
-  grappler: PartyGrapplerStats;
-  hunter: PartyHunterStats;
-  kangaroo: PartyKangarooStats;
-  lava: PartyLavaStats;
-  mlgSumo: PartyMLGSumoStats;
-  oneInTheChamber: PartyOITCStats;
-  quake: PartyQuakeStats;
-  race: PartyRaceStats;
-  spleef: PartySpleefStats;
-  stomper: PartyStomperStats;
-  tntRun: PartyTNTRunStats;
-}
+import type { APIPlayerPartyStats, PartyGame } from "@stats-types/party";
 
 export class PartyStats {
+  public dailyPoints: number;
+  public gamesPlayed: number;
+  public monthlyPoints: number;
+  public points: number;
+  public secondPlace: number;
+  public thirdPlace: number;
+  public wins: number;
+  public weeklyPoints: number;
+  public getMiniGameStats: (minigame: PartyGame) => {
+    minigame: PartyGame;
+    dailyPoints: number;
+    gamesPlayed: number;
+    monthlyPoints: number;
+    points: number;
+    firstPlace: number;
+    secondPlace: number;
+    thirdPlace: number;
+    weeklyPoints: number;
+  };
+
   constructor(data: Partial<APIPlayerPartyStats> = {}) {
     this.wins = data.first_place ?? 0;
     this.gamesPlayed = data.played ?? 0;
@@ -52,20 +31,27 @@ export class PartyStats {
     this.secondPlace = data.second_place ?? 0;
     this.thirdPlace = data.third_place ?? 0;
 
-    this.arenaPVP = new PartyArenaPVPStats(data);
-    this.barbarian = new PartyBarbarianStats(data);
-    this.blockParty = new PartyBlockPartyStats(data);
-    this.fisherman = new PartyFishermanStats(data);
-    this.grappler = new PartyGrapplerStats(data);
-    this.hunter = new PartyHunterStats(data);
-    this.kangaroo = new PartyKangarooStats(data);
-    this.lava = new PartyLavaStats(data);
-    this.mlgSumo = new PartyMLGSumoStats(data);
-    this.oneInTheChamber = new PartyOITCStats(data);
-    this.quake = new PartyQuakeStats(data);
-    this.race = new PartyRaceStats(data);
-    this.spleef = new PartySpleefStats(data);
-    this.stomper = new PartyStomperStats(data);
-    this.tntRun = new PartyTNTRunStats(data);
+    this.getMiniGameStats = function getMiniGameStats(minigame: PartyGame) {
+      const gamesPlayed = data[`${minigame}_played`] ?? 0;
+      const points = data[`${minigame}_points`] ?? 0;
+      const dailyPoints = data[`${minigame}_points_daily`] ?? 0;
+      const monthlyPoints = data[`${minigame}_points_monthly`] ?? 0;
+      const weeklyPoints = data[`${minigame}_points_weekly`] ?? 0;
+      const firstPlace = data[`${minigame}_first_place`] ?? 0;
+      const secondPlace = data[`${minigame}_second_place`] ?? 0;
+      const thirdPlace = data[`${minigame}_third_place`] ?? 0;
+
+      return {
+        minigame,
+        gamesPlayed,
+        points,
+        dailyPoints,
+        monthlyPoints,
+        weeklyPoints,
+        firstPlace,
+        secondPlace,
+        thirdPlace,
+      };
+    };
   }
 }

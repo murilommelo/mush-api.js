@@ -1,24 +1,22 @@
 import type { APIPlayerHideAndSeekStats } from "@stats-types/seek";
 
-export interface HideAndSeekHiderStats {
-  blocksChanged: number;
-  dailyWins: number;
-  dailyWinstreak: number;
-  deaths: number;
-  frozen: number;
-  gamesPlayed: number;
-  losses: number;
-  maxWinstreak: number;
-  monthlyWins: number;
-  monthlyWinstreak: number;
-  seekersStunned: number;
-  weeklyWins: number;
-  weeklyWinstreak: number;
-  wins: number;
-  winstreak: number;
-}
-
 export class HideAndSeekHiderStats {
+  public blocksChanged: number;
+  public dailyWins: number;
+  public dailyWinstreak: number;
+  public deaths: number;
+  public frozen: number;
+  public gamesPlayed: number;
+  public losses: number;
+  public maxWinstreak: number;
+  public monthlyWins: number;
+  public monthlyWinstreak: number;
+  public seekersStunned: number;
+  public weeklyWins: number;
+  public weeklyWinstreak: number;
+  public wins: number;
+  public winstreak: number;
+
   constructor(data: Partial<APIPlayerHideAndSeekStats> = {}) {
     this.blocksChanged = data.hider_blocks_changed ?? 0;
     this.deaths = data.hider_deaths ?? 0;

@@ -1,14 +1,12 @@
 import type { Color } from "@api-types/index.js";
 import type { HungerGamesRanking } from "@stats-types/hungergames.js";
 
-export interface Ranking {
-  color: Color;
-  symbol: string;
-  name: string;
-  id: string;
-}
-
 export class Ranking {
+  public color: Color;
+  public symbol: string;
+  public name: string;
+  public id: string;
+
   constructor(data: HungerGamesRanking) {
     this.color = data.hex_color;
     this.symbol = data.symbol;

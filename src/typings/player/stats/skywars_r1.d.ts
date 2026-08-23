@@ -25,7 +25,7 @@ export type SkyWarsKit =
   | "chicken"
   | "soup";
 
-type SkyWarsMode =
+export type SkyWarsMode =
   | "solo"
   | "team"
   | "normal"

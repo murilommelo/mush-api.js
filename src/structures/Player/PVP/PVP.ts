@@ -4,14 +4,12 @@ import { PVPChallengesStats } from "./Modes/Challenges.js";
 import { PVPFPSStats } from "./Modes/FPS.js";
 import { PVPMLGStats } from "./Modes/MLG.js";
 
-export interface PVPStats {
-  arena: PVPArenaStats;
-  challenges: PVPChallengesStats;
-  fps: PVPFPSStats;
-  mlg: PVPMLGStats;
-}
-
 export class PVPStats {
+  public arena: PVPArenaStats;
+  public challenges: PVPChallengesStats;
+  public fps: PVPFPSStats;
+  public mlg: PVPMLGStats;
+
   constructor(data: Partial<APIPlayerPVPStats> = {}) {
     this.arena = new PVPArenaStats(data);
     this.challenges = new PVPChallengesStats(data);

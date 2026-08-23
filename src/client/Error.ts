@@ -1,8 +1,8 @@
 export class MushAPIJSError extends Error {
-  public readonly statusCode: number;
+  public statusCode: number;
 
-  constructor(message: string, statusCode: number, options: ErrorOptions = {}) {
-    super(message, options);
+  constructor(message: string, statusCode: number, cause?: unknown) {
+    super(message, { cause });
 
     this.name = `MushAPIJSError [${statusCode}]`;
     this.statusCode = statusCode;

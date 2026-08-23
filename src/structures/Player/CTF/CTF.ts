@@ -1,23 +1,21 @@
 import type { APIPlayerCTFStats } from "@stats-types/ctf";
 
-export interface CaptureTheFlagStats {
-  captures: number;
-  coins: number;
-  dailyCaptures: number;
-  dailyGames: number;
-  dailyKills: number;
-  gamesPlayed: number;
-  kills: number;
-  monthlyCaptures: number;
-  monthlyGames: number;
-  monthlyKills: number;
-  returnedFlags: number;
-  weeklyCaptures: number;
-  weeklyGames: number;
-  weeklyKills: number;
-}
-
 export class CaptureTheFlagStats {
+  public captures: number;
+  public coins: number;
+  public dailyCaptures: number;
+  public dailyGames: number;
+  public dailyKills: number;
+  public gamesPlayed: number;
+  public kills: number;
+  public monthlyCaptures: number;
+  public monthlyGames: number;
+  public monthlyKills: number;
+  public returnedFlags: number;
+  public weeklyCaptures: number;
+  public weeklyGames: number;
+  public weeklyKills: number;
+
   constructor(data: Partial<APIPlayerCTFStats> = {}) {
     this.captures = data.captures ?? 0;
     this.coins = data.coins ?? 0;

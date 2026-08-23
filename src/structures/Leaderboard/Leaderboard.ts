@@ -3,12 +3,10 @@ import type {
   ModeLeaderboardPlayer,
 } from "@api-types/index.js";
 
-export interface ModeLeaderboard<M extends APILeaderboardMode> {
-  mode: M;
-  players: ModeLeaderboardPlayer<M>[];
-}
-
 export class ModeLeaderboard<M extends APILeaderboardMode> {
+  public mode: M;
+  public players: ModeLeaderboardPlayer<M>[];
+
   constructor(mode: M, players: ModeLeaderboardPlayer<M>[]) {
     this.mode = mode;
     this.players = players;

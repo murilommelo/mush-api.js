@@ -1,40 +1,44 @@
-import type { APIPlayerMurderStats } from "@stats-types/murder";
-import { MurderBodyguardRoleStats } from "./Roles/Bodyguard";
-import { MurderDetectiveRoleStats } from "./Roles/Detective";
-import { MurderEngineerRoleStats } from "./Roles/Engineer";
-import { MurderInnocentRoleStats } from "./Roles/Innocent";
-import { MurderMedicRoleStats } from "./Roles/Medic";
-import { MurderMurdererRoleStats } from "./Roles/Murderer";
-import { MurderScoutRoleStats } from "./Roles/Scout";
-
-export interface MurderStats {
-  bodyguardRole: MurderBodyguardRoleStats;
-  coins: number;
-  dailyMurdererKills: number;
-  dailyWins: number;
-  dailyWinstreak: number;
-  deaths: number;
-  detectiveRole: MurderDetectiveRoleStats;
-  engineerRole: MurderEngineerRoleStats;
-  gamesPlayed: number;
-  innocentRole: MurderInnocentRoleStats;
-  kills: number;
-  losses: number;
-  medicRole: MurderMedicRoleStats;
-  monthlyMurdererKills: number;
-  monthlyWins: number;
-  monthlyWinstreak: number;
-  murdererRole: MurderMurdererRoleStats;
-  murdererKills: number;
-  scoutRole: MurderScoutRoleStats;
-  weeklyMurdererKills: number;
-  weeklyWins: number;
-  weeklyWinstreak: number;
-  wins: number;
-  winstreak: number;
-}
+import type { APIPlayerMurderStats, MurderRole } from "@stats-types/murder";
 
 export class MurderStats {
+  public coins: number;
+  public dailyMurdererKills: number;
+  public dailyWins: number;
+  public dailyWinstreak: number;
+  public deaths: number;
+  public gamesPlayed: number;
+  public kills: number;
+  public losses: number;
+  public monthlyMurdererKills: number;
+  public monthlyWins: number;
+  public monthlyWinstreak: number;
+  public murdererKills: number;
+  public weeklyMurdererKills: number;
+  public weeklyWins: number;
+  public weeklyWinstreak: number;
+  public wins: number;
+  public winstreak: number;
+  public getRoleStats: (role: MurderRole) => {
+    role: MurderRole;
+    dailyMurdererKills: number;
+    dailyWins: number;
+    dailyWinstreak: number;
+    deaths: number;
+    gamesPlayed: number;
+    kills: number;
+    lastPlayedBits: number;
+    losses: number;
+    monthlyMurdererKills: number;
+    monthlyWins: number;
+    monthlyWinstreak: number;
+    murdererKills: number;
+    weeklyMurdererKills: number;
+    weeklyWins: number;
+    weeklyWinstreak: number;
+    wins: number;
+    winstreak: number;
+  };
+
   constructor(data: Partial<APIPlayerMurderStats> = {}) {
     this.coins = data.coins_picked_up ?? 0;
     this.deaths = data.deaths ?? 0;
@@ -53,12 +57,46 @@ export class MurderStats {
     this.dailyWinstreak = data.winstreak_daily ?? 0;
     this.monthlyWinstreak = data.winstreak_monthly ?? 0;
     this.weeklyWinstreak = data.winstreak_weekly ?? 0;
-    this.bodyguardRole = new MurderBodyguardRoleStats(data);
-    this.detectiveRole = new MurderDetectiveRoleStats(data);
-    this.engineerRole = new MurderEngineerRoleStats(data);
-    this.innocentRole = new MurderInnocentRoleStats(data);
-    this.medicRole = new MurderMedicRoleStats(data);
-    this.murdererRole = new MurderMurdererRoleStats(data);
-    this.scoutRole = new MurderScoutRoleStats(data);
+
+    this.getRoleStats = function getRoleStats(role: MurderRole) {
+      const deaths = data[`${role}_deaths`] ?? 0;
+      const murdererKills = data[`${role}_killed_murderer`] ?? 0;
+      const dailyMurdererKills = data[`${role}_killed_murderer_daily`] ?? 0;
+      const monthlyMurdererKills = data[`${role}_killed_murderer_monthly`] ?? 0;
+      const weeklyMurdererKills = data[`${role}_killed_murderer_weekly`] ?? 0;
+      const kills = data[`${role}_kills`] ?? 0;
+      const lastPlayedBits = data[`${role}_last_played_bits`] ?? 0;
+      const losses = data[`${role}_losses`] ?? 0;
+      const gamesPlayed = data[`${role}_played`] ?? 0;
+      const wins = data[`${role}_wins`] ?? 0;
+      const dailyWins = data[`${role}_wins_daily`] ?? 0;
+      const monthlyWins = data[`${role}_wins_monthly`] ?? 0;
+      const weeklyWins = data[`${role}_wins_weekly`] ?? 0;
+      const winstreak = data[`${role}_winstreak`] ?? 0;
+      const dailyWinstreak = data[`${role}_winstreak_daily`] ?? 0;
+      const monthlyWinstreak = data[`${role}_winstreak_monthly`] ?? 0;
+      const weeklyWinstreak = data[`${role}_winstreak_weekly`] ?? 0;
+
+      return {
+        role,
+        deaths,
+        murdererKills,
+        dailyMurdererKills,
+        monthlyMurdererKills,
+        weeklyMurdererKills,
+        kills,
+        lastPlayedBits,
+        losses,
+        gamesPlayed,
+        wins,
+        dailyWins,
+        monthlyWins,
+        weeklyWins,
+        winstreak,
+        dailyWinstreak,
+        monthlyWinstreak,
+        weeklyWinstreak,
+      };
+    };
   }
 }
