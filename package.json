@@ -4,7 +4,7 @@
   "version": "3.0.1",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.mts",
   "keywords": [
     "mush",
     "api",
